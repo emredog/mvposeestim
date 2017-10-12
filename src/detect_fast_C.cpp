@@ -10,6 +10,11 @@
 #define MINLEVEL -1 // if negative, levels calculated during training will be used
 #define MAXLEVEL -1 // else, these levels will be used
 
+#define HEATMAPMULTIPLIER 0.07 //this worked best on our experiments
+
+
+
+
 #if defined(WFV) || defined(WFV_CNN) // WEIGHTS FOR VIEWPOINTS
 
 #if defined(HUMANEVA)
@@ -53,8 +58,8 @@ std::map<int, FPTYPE> initMedianErrorsMap()
     medErrs[24-1] = 11.2361022964662;
     medErrs[25-1] = 11.7311624457572;
     medErrs[26-1] = 13.6086380901691;
-#elif defined(UMPM) // OLD values                   median singleview YRErrors 
-//                                                    UMPM10 on train set               
+#elif defined(UMPM) // median singleview YRErrors 
+// UMPM10 on train set               
     medErrs[1-1] =  4.71260;
     medErrs[2-1] =  4.37160;
     medErrs[3-1] =  6.77740;
@@ -250,7 +255,7 @@ int frame = -1;
 
 
 
-#if defined(MULTIVIEW) || defined(MV_PTC)
+#if defined(MV) || defined(MV_PTC)
 std::string imgFileB;
 std::string viewB;
 
@@ -289,7 +294,7 @@ static inline double calculateEpsilon(const std::vector<FPTYPE>& oldBoxes, const
     return meanDistance;
 }
 
-#endif //defined(MULTIVIEW) || defined(MV_PTC)
+#endif //defined(MV) || defined(MV_PTC)
 
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
@@ -731,7 +736,7 @@ void display_boxes(const std::vector<FPTYPE> *boxes, int partsNbr)
 }
 //--------------------------------------------------------------------
 
-#ifdef MULTIVIEW
+#ifdef MV
 
 //--------------------------------------------------------------------
 // calculate pose estimation with distance transform
@@ -966,7 +971,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
 {
     std::cout << "Running detect_fast_mv with maximum iterations: " << maxIterations << " and required epsilon: " << requiredEpsilon << std::endl;
 
-    char buffer[400]; //for filenames and stuff
+    // char buffer[400]; //for filenames and stuff
 
     std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > boxPair(NULL, NULL);
 
@@ -1320,7 +1325,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
 
     return boxPair;
 }
-#endif //MULTIVIEW
+#endif //MV
 
 
 
@@ -2658,8 +2663,8 @@ void printVersionInfo()
     std::cout << "Human Pose Detection based on Yang & Ramanan's implementation." << std::endl;
     std::cout << "Compiled with following preprocessor commands: " << std::endl;
     
-    std::cout << "\tMULTIVIEW :\t";
-#ifdef MULTIVIEW
+    std::cout << "\tMV :\t\t";
+#ifdef MV
     std::cout << "yes\t";
 #else
     std::cout << "no\t";
@@ -2680,7 +2685,7 @@ void printVersionInfo()
 #else
     std::cout << "no\t";
 #endif
-    std::cout << "(Multiview pose estimation with Adaptive Viewpoint Selection [can be used with MULTIVIEW or MV_PTC] )\n";
+    std::cout << "(Multiview pose estimation with Adaptive Viewpoint Selection [can be used with MV or MV_PTC] )\n";
 
     std::cout << "\tWFV_CNN :\t";
 #ifdef WFV_CNN
@@ -2688,7 +2693,7 @@ void printVersionInfo()
 #else
     std::cout << "no\t";
 #endif
-    std::cout << "(Multiview pose estimation with Adaptive Viewpoint Selection on ConvNets [can be used with MULTIVIEW or MV_PTC] )\n";
+    std::cout << "(Multiview pose estimation with Adaptive Viewpoint Selection on ConvNets [can be used with MV or MV_PTC] )\n";
     
 
     
@@ -2749,20 +2754,20 @@ int main(const int argc, const char **argv)
     
     
 //----------------------------------------------------------------------------
-//  Read arguments for MULTIVIEW version
+//  Read arguments for MV version
 //----------------------------------------------------------------------------
-#ifdef MULTIVIEW // with distance transform + multiview
-    int maxIterations = 4;
+#ifdef MV // with distance transform + multiview
+    int maxIterations = 12;
     double requiredEpsilon = 0.1;
     outputFolder = "./";
     const char *secondImageFileName = NULL;
     const char *epipolarGeometryFileNameA2B = NULL;
     const char *epipolarGeometryFileNameB2A = NULL;
 
-    if (argc != 10) //let's force the user to input all arguments
+    if (argc != 6) //let's force the user to input all arguments
     {
-        printf("Usage: %s image_fileA image_fileB epipolarGeometryFileBtoA epipolarGeomteryFileBtoA maxIterations requiredEpsilon OutputFolderForSaving modelFileName HeatMapMultiplier\n\n", argv[0]);
-        printf("Example: %s ../resources/im0110A.jpg ../resources/im0110B.jpg ../resources/BtoA.csv ../resources/AtoB.csv 12 0.1 ../output ../resources/model.txt 0.025 \n", argv[0]);
+        printf("Usage: %s image_fileA image_fileB epipolarGeometryFileBtoA epipolarGeomteryFileBtoA modelFileName \n\n", argv[0]);
+        printf("Example: %s ../resources/im0110A.jpg ../resources/im0110B.jpg ../resources/BtoA.csv ../resources/AtoB.csv ../resources/model.txt \n", argv[0]);
         return 1;
     }
 
@@ -2771,11 +2776,7 @@ int main(const int argc, const char **argv)
     secondImageFileName = argv[2];
     epipolarGeometryFileNameA2B = argv[3]; // yes. these are inversed on purpose
     epipolarGeometryFileNameB2A = argv[4];
-    maxIterations = atoi(argv[5]);
-    requiredEpsilon = atof(argv[6]);
-    outputFolder = std::string(argv[7]);
-    modelFileName = argv[8];
-    heatMultiplier = atof(argv[9]);
+    modelFileName = argv[5];
 
     //keep track of filenames for debug purposes
     {
@@ -2924,7 +2925,7 @@ int main(const int argc, const char **argv)
 //----------------------------------------------------------------------------
 //  Read arguments for the Single-view version
 //----------------------------------------------------------------------------
-#else // with distance transform && single view (NOT MULTIVIEW NOR MV_PTC)
+#else // with distance transform && single view (NOT MV NOR MV_PTC)
 
     if( argc == 4 )
     {
@@ -2986,9 +2987,9 @@ int main(const int argc, const char **argv)
     
     
 //----------------------------------------------------------------------------
-//  Execute detect_fast for MULTIVIEW version
+//  Execute detect_fast for MV version
 //----------------------------------------------------------------------------
-#ifdef MULTIVIEW
+#ifdef MV
 
     cv::Mat cvSecondImg = cv::imread(secondImageFileName, -1);
     myArray<unsigned char> imgB(&cvSecondImg);
@@ -3021,6 +3022,9 @@ int main(const int argc, const char **argv)
     saveBoxCenters(boxPair.first, model->partsNbr, buffer);
     std::sprintf(buffer, "%s/%s_B_Pose.txt", outputFolder.c_str(), imgFileB.c_str());
     saveBoxCenters(boxPair.second, model->partsNbr, buffer);
+#else
+    DisplayTools::displayDetection(img, *(boxPair.first), model->partsNbr, 0);
+    DisplayTools::displayDetection(cvSecondImg, *(boxPair.second), model->partsNbr, 0);
 #endif //SAVE_TEXT
 
     //DisplayTools::displayBothDetections(cvImg, *(boxPair.first), cvSecondImg, *(boxPair.second), model->partsNbr);
@@ -3074,7 +3078,7 @@ int main(const int argc, const char **argv)
 //----------------------------------------------------------------------------
 //  Execute Original detect_fast_C
 //----------------------------------------------------------------------------
- // NOT MULTIVIEW NOR MV_PTC
+ // NOT MV NOR MV_PTC
     // run detection with distance transform
     top(0);
     std::vector<FPTYPE> *boxes = detect_fast_C(&img, model);
@@ -3111,7 +3115,7 @@ int main(const int argc, const char **argv)
 #endif
 
     // release memory
-#if defined(MULTIVIEW) || defined(MV_PTC)
+#if defined(MV) || defined(MV_PTC)
     delete boxPair.first;
     delete boxPair.second;
 #else

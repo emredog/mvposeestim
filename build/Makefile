@@ -13,7 +13,7 @@ FPTYPE := double
 DEBUG := no
 USE_CUDA := no
 USE_NMS := no
-MULTIVIEW := no
+MV := no
 MV_PTC := no
 SAVE_TEXT := yes
 SAVE_IMAGES := no
@@ -23,10 +23,10 @@ HUMANEVA := yes
 UMPM := no
 VERBOSE := no
 
-# check if MULTIVIEW and MV_PTC is given together (it should not)
-ifeq ($(MULTIVIEW),yes)
+# check if MV and MV_PTC is given together (it should not)
+ifeq ($(MV),yes)
 	ifeq ($(MV_PTC),yes)
-        $(error MULTIVIEW and MV_PTC flags cannot be used in conjunction)
+        $(error MV and MV_PTC flags cannot be used in conjunction)
 	endif
 endif
 
@@ -45,13 +45,13 @@ ifeq ($(WFV),yes)
 endif
 
 # check if it tries to use WFV without multi-view
-ifeq ($(MULTIVIEW),no)
+ifeq ($(MV),no)
 	ifeq ($(MV_PTC),no)
 		ifeq ($(WFV),yes)
-        	$(error WFV is only allowed with either MULTIVIEW or MV_PTC)
+        	$(error WFV is only allowed with either MV or MV_PTC)
         endif
         ifeq ($(WFV_CNN),yes)
-        	$(error WFV_CNN is only allowed with either MULTIVIEW or MV_PTC)
+        	$(error WFV_CNN is only allowed with either MV or MV_PTC)
         endif     
 	endif
 endif
@@ -84,10 +84,10 @@ ifeq ($(USE_NMS),yes)
 	NVCCFLAGS += -DUSE_NMS
 endif
 
-ifeq ($(MULTIVIEW),yes)
-	# multiview implementation
-	CFLAGS += -DMULTIVIEW
-	NVCCFLAGS += -DMULTIVIEW
+ifeq ($(MV),yes)
+	# mV implementation
+	CFLAGS += -DMV
+	NVCCFLAGS += -DMV
 
 	ifeq ($(SAVE_IMAGES),yes)
 		# outputs as images
@@ -97,7 +97,7 @@ ifeq ($(MULTIVIEW),yes)
 endif
 
 ifeq ($(MV_PTC),yes)
-	# multiview + part type compatibility implementation
+	# mV + part type compatibility implementation
 	CFLAGS += -DMV_PTC
 	NVCCFLAGS += -DMV_PTC
 
@@ -170,14 +170,14 @@ help:
 	@echo "make DEBUG=yes  -> build target in debug mode"
 	@echo "make test  -> to debug Makefile"
 	@echo "make FPTYPE=float  -> use floats instead of doubles"
-	@echo "make MULTIVIEW=yes  -> perform multiview pose estimation"
-	@echo "make MULTIVIEW=yes WFV=yes -> perform multiview pose estimation with Weights for Viewpoints"
-	@echo "make MULTIVIEW=yes WFV_CNN=yes -> perform multiview pose estimation with Weights for Viewpoints on ConvNets"
-	@echo "make MV_PTC=yes  -> perform multiview pose estimation with Part Type Compatibility"
-	@echo "make MV_PTC=yes WFV=yes -> perform multiview pose estimation with Part Type Compatibility and Weights for Viewpoints"
-	@echo "make MV_PTC=yes WFV_CNN=yes -> perform multiview pose estimation with Part Type Compatibility and Weights for Viewpoints on ConvNets"
-	@echo "make MULTIVIEW=yes SAVE_TEXT=no  -> do not save results as text files"
-	@echo "make MULTIVIEW=yes SAVE_IMAGES=yes  -> save results as text files AND images"
+	@echo "make MV=yes  -> perform mV pose estimation"
+	@echo "make MV=yes WFV=yes -> perform mV pose estimation with Weights for Viewpoints"
+	@echo "make MV=yes WFV_CNN=yes -> perform mV pose estimation with Weights for Viewpoints on ConvNets"
+	@echo "make MV_PTC=yes  -> perform mV pose estimation with Part Type Compatibility"
+	@echo "make MV_PTC=yes WFV=yes -> perform mV pose estimation with Part Type Compatibility and Weights for Viewpoints"
+	@echo "make MV_PTC=yes WFV_CNN=yes -> perform mV pose estimation with Part Type Compatibility and Weights for Viewpoints on ConvNets"
+	@echo "make MV=yes SAVE_TEXT=no  -> do not save results as text files"
+	@echo "make MV=yes SAVE_IMAGES=yes  -> save results as text files AND images"
 	@echo "make HUMANEVA=no UMPM=yes  -> code configured for UMPM dataset, instead of HUMANEVA"
 	@echo
 
@@ -186,7 +186,7 @@ test:
 	@echo EXEC=$(EXEC)
 	@echo INC=$(INC) 
 	@echo LDFLAGS=$(LDFLAGS) 
-	@echo MULTIVIEW=$(MULTIVIEW)
+	@echo MV=$(MV)
 	@echo MV_PTC=$(MV_PTC)
 	@echo WFV=$(WFV)
 	@echo WFV_CNN=$(WFV_CNN)
