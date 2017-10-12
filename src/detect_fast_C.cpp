@@ -55,32 +55,32 @@ std::map<int, FPTYPE> initMedianErrorsMap()
     medErrs[26-1] = 13.6086380901691;
 #elif defined(UMPM) // OLD values                   median singleview YRErrors 
 //                                                    UMPM10 on train set               
-    medErrs[1-1] =  /*4.52286674577086;*/         4.71260;
-    medErrs[2-1] =  /*4.68093760372858;*/         4.37160;
-    medErrs[3-1] =  /*8.06070632202910;*/         6.77740;
-    medErrs[4-1] =  /*9.30519784112622;*/         7.73220;
-    medErrs[5-1] =  /*10.8731622746099;*/         9.64100;
-    medErrs[6-1] =  /*13.4908924850249;*/         12.6993;
-    medErrs[7-1] =  /*16.9954713879904;*/         16.1455;
-    medErrs[8-1] =  /*6.89394557725994;*/         6.15180;
-    medErrs[9-1] =  /*7.12851971309615;*/         6.08160;
-    medErrs[10-1] = /*7.18285066878047;*/         6.12110;
-    medErrs[11-1] = /*7.35125609759992;*/         5.93120;
-    medErrs[12-1] = /*6.79060343783969;*/         5.74650;
-    medErrs[13-1] = /*6.39981509615710;*/         5.23180;
-    medErrs[14-1] = /*4.98458376296357;*/         4.43860;
-    medErrs[15-1] = /*7.08884726877368;*/         6.20600;
-    medErrs[16-1] = /*7.78610546069089;*/         6.42290;
-    medErrs[17-1] = /*10.9487287321405;*/         7.56770;
-    medErrs[18-1] = /*15.6455275695645;*/         9.87990;
-    medErrs[19-1] = /*18.2207510649260;*/         11.4372;
-    medErrs[20-1] = /*7.11832949519915;*/         5.73780;
-    medErrs[21-1] = /*7.01415721752958;*/         5.74410;
-    medErrs[22-1] = /*7.51673922721814;*/         5.83680;
-    medErrs[23-1] = /*7.50291182358559;*/         5.67080;
-    medErrs[24-1] = /*6.69343645446793;*/         4.56150;
-    medErrs[25-1] = /*7.56641964620654;*/         4.97870;
-    medErrs[26-1] = /*7.32449319816737;*/         4.52870;
+    medErrs[1-1] =  4.71260;
+    medErrs[2-1] =  4.37160;
+    medErrs[3-1] =  6.77740;
+    medErrs[4-1] =  7.73220;
+    medErrs[5-1] =  9.64100;
+    medErrs[6-1] =  12.6993;
+    medErrs[7-1] =  16.1455;
+    medErrs[8-1] =  6.15180;
+    medErrs[9-1] =  6.08160;
+    medErrs[10-1] = 6.12110;
+    medErrs[11-1] = 5.93120;
+    medErrs[12-1] = 5.74650;
+    medErrs[13-1] = 5.23180;
+    medErrs[14-1] = 4.43860;
+    medErrs[15-1] = 6.20600;
+    medErrs[16-1] = 6.42290;
+    medErrs[17-1] = 7.56770;
+    medErrs[18-1] = 9.87990;
+    medErrs[19-1] = 11.4372;
+    medErrs[20-1] = 5.73780;
+    medErrs[21-1] = 5.74410;
+    medErrs[22-1] = 5.83680;
+    medErrs[23-1] = 5.67080;
+    medErrs[24-1] = 4.56150;
+    medErrs[25-1] = 4.97870;
+    medErrs[26-1] = 4.52870;
 #endif //ifdef HUMANEVA / elif defined(UMPM)
     return medErrs;
 }
@@ -92,35 +92,7 @@ std::map<int, FPTYPE> initExpectedErrEstInaccuracy()
 {
     std::map<int, FPTYPE> expErrEstInac;
 #ifdef HUMANEVA
-#ifdef WFV
-    // === This was calculated for WFV version ===
-    expErrEstInac[1-1] =   9.49078581398220;
-    expErrEstInac[2-1] =   2.72137870735402;
-    expErrEstInac[3-1] =   4.75302178021782;
-    expErrEstInac[4-1] =   5.58651594207918;
-    expErrEstInac[5-1] =   8.94822601353700;
-    expErrEstInac[6-1] =   9.61946747027383;
-    expErrEstInac[7-1] =   13.2950980853197;
-    expErrEstInac[8-1] =   4.35878519120773;
-    expErrEstInac[9-1] =   3.87920630456383;
-    expErrEstInac[10-1] =  3.39028655613788;
-    expErrEstInac[11-1] =  4.65321384223247;
-    expErrEstInac[12-1] =  7.77277369375024;
-    expErrEstInac[13-1] =  9.61470274375999;
-    expErrEstInac[14-1] =  12.8250566638919;
-    expErrEstInac[15-1] =  4.56461040660787;
-    expErrEstInac[16-1] =  5.34196636890174;
-    expErrEstInac[17-1] =  8.95483126688971;
-    expErrEstInac[18-1] =  9.36311361510316;
-    expErrEstInac[19-1] =  12.9728993466988;
-    expErrEstInac[20-1] =  4.00726291241969;
-    expErrEstInac[21-1] =  3.64174304829837;
-    expErrEstInac[22-1] =  3.42973025930093;
-    expErrEstInac[23-1] =  4.32758579123675;
-    expErrEstInac[24-1] =  8.53620105473858;
-    expErrEstInac[25-1] =  10.0795598954779;
-    expErrEstInac[26-1] =  13.5899179939152;
-#elif defined(WFV_CNN)
+#ifdef WFV_CNN
     // === Calculated on actual set of he09, for the CNN: finetune_he06_weights.hdf5
     expErrEstInac[1-1] =   8.29422192892976;
     expErrEstInac[2-1] =   3.33345534053354;
@@ -148,39 +120,11 @@ std::map<int, FPTYPE> initExpectedErrEstInaccuracy()
     expErrEstInac[24-1] =  8.10523155072496;
     expErrEstInac[25-1] =  9.46193947272834;
     expErrEstInac[26-1] =  12.0613704031297;
-#endif // WFV or WFV_CNN
+#endif // ifdef WFV_CNN
 
 #elif defined(UMPM)
-#ifdef WFV
-    // === This was calculated for WFV version ===
-    expErrEstInac[1-1] =   2.99259372781029;
-    expErrEstInac[2-1] =   2.66567685966957;
-    expErrEstInac[3-1] =   6.78840794731742;
-    expErrEstInac[4-1] =   7.56246945308278;
-    expErrEstInac[5-1] =   9.68675202071672;
-    expErrEstInac[6-1] =   11.5462608890582;
-    expErrEstInac[7-1] =   14.5400307707785;
-    expErrEstInac[8-1] =   6.04732532729650;
-    expErrEstInac[9-1] =   4.99825626585779;
-    expErrEstInac[10-1] =  4.83044401490001;
-    expErrEstInac[11-1] =  5.62938671377002;
-    expErrEstInac[12-1] =  7.22253996789490;
-    expErrEstInac[13-1] =  8.11627426686367;
-    expErrEstInac[14-1] =  10.1298425378782;
-    expErrEstInac[15-1] =  6.71509955898323;
-    expErrEstInac[16-1] =  8.23837029985975;
-    expErrEstInac[17-1] =  10.1763166444526;
-    expErrEstInac[18-1] =  11.3295914089902;
-    expErrEstInac[19-1] =  13.9242442392310;
-    expErrEstInac[20-1] =  6.28771162167761;
-    expErrEstInac[21-1] =  5.58909210869155;
-    expErrEstInac[22-1] =  4.91456995426462;
-    expErrEstInac[23-1] =  5.88154615042949;
-    expErrEstInac[24-1] =  7.86521051689175;
-    expErrEstInac[25-1] =  8.53885270583881;
-    expErrEstInac[26-1] =  10.0529769379943;
-#elif defined(WFV_CNN)
-    // === Calculated on umpm10 validation data, for the CNN: finetune_umpm_16_weights.hdf5
+#ifdef WFV_CNN
+// === Calculated on umpm10 validation data, for the CNN: finetune_umpm_16_weights.hdf5
     expErrEstInac[1-1] =   1.84596254034401;
     expErrEstInac[2-1] =   2.09170141852983;
     expErrEstInac[3-1] =   4.93839658711549;
@@ -207,7 +151,7 @@ std::map<int, FPTYPE> initExpectedErrEstInaccuracy()
     expErrEstInac[24-1] =  6.80539339130505;
     expErrEstInac[25-1] =  7.73396854118898;
     expErrEstInac[26-1] =  9.35173399623231;
-#endif // WFV or WFV_CNN
+#endif // WFV_CNN
 #endif
     return expErrEstInac;
 }
@@ -237,9 +181,6 @@ std::map<int, FPTYPE> expectedInaccuracyForSingleViewErrEst = initExpectedErrEst
 #include "epipolargeometry.h"
 #include "displaytools.h"
 #include "parttypecompat.h"
-#ifdef WFV
-#include "estimateyrerror.h"
-#endif
 #ifdef WFV_CNN
 #include "estimateyrerrorcnn.h"
 #endif
@@ -353,18 +294,7 @@ static inline double calculateEpsilon(const std::vector<FPTYPE>& oldBoxes, const
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 
-#if NO_DT
 
-#define NO_OF_CAND_PTS 50
-
-//a compare snippet to order <score, index> pairs (after the responses are calculated)
-struct PairComparator {
-    bool operator()( const std::pair<FPTYPE, int>& p1, const std::pair<FPTYPE, int>& p2 ) const
-    {  if( p1.first < p2.first ) return true;
-        else return false;
-    }
-};
-#endif //NO_DT
 
 //--------------------------------------------------------------------
 // function that is equivalent of "mkdir -p /a/b/c/d/e" (the mkdir(2) that we use does not create the intermediate folders)
@@ -390,106 +320,7 @@ static int _mkdir(const char *dir, mode_t mode)
 }
 
 
-#if NO_DT
-// backtracking without distance transform
-void backtrack_noDT(FPTYPE thresh, myArray<FPTYPE> *promisingPositions[], myArray<int> **IchildPos,
-                    const Component *parts, const Feature_pyramid *pyra, int *parts_level,
-                    int componentId, /*output*/ std::vector<FPTYPE> *boxes, int *detectionNbr)
-{
-    int numparts = parts->filterid->getRows();
-    int nbOfPromPts = promisingPositions[0]->getCols();
-
-    // =========== promisingPositions ========
-    // this is a multidimensional array to store best scoring positions after filtering
-    // [int]    1st row of the structure stores the COLUMN coordinate (x) of the promising instance
-    // [int]    2nd row of the structure stores the ROW coordinate (y) of the promising instance;
-    // [int]    3rd row: filterId (ZERO INDEXED)
-    // [FPTYPE] 4th row: score of this coordinate
-    // each column is a best scoring INSTANCE
-    // planes: only 1 plane
-    // each myArray is for a part number (e.g. 26 myArray for 26 parts)
-
-    // ============= IchildPos ==============
-    // for each parent part, this array will keep track best child position
-    // e.g. IchildPos[26]->get(39, 0, 0) is the best index for part 26, given the index (39) of its parent
-    // it's actually index for promisingPositions[26],
-    // you can get the col data like this: promisingPositions[26]->get(COL, 39, 0)
-    // "    "   "   "  row  "    "    "  : promisingPositions[26]->get(ROW, 39, 0)
-    // and so on..
-
-
-    int currentDetectionNbr = 0; // detections number for current call
-
-    for (int ri=0; ri<nbOfPromPts; ri++)
-    {        // search sucessfull detections
-        FPTYPE rootScore = promisingPositions[0]->get(SCORE, ri);
-        if( rootScore >= thresh )
-        {
-            // new detection
-            // get box position for each body part
-            int xptr[numparts]; //col of part
-            int yptr[numparts]; //row of part
-            int mptr[numparts]; //fi  of part
-
-            int indexOfParentPart = -1;
-
-            for( int k = 1; k <= numparts; k++)
-            {
-                if( k == 1 ) //root part
-                {
-                    xptr[k-1] = static_cast<int>(promisingPositions[0]->get(COL, ri)); // col of this root point
-                    yptr[k-1] = static_cast<int>(promisingPositions[0]->get(ROW, ri)); // row of this root point
-                    mptr[k-1] = static_cast<int>(promisingPositions[0]->get(FI, ri)); // fi of this root point
-
-                    indexOfParentPart = ri; // get index of root part
-                }
-                else // for other parts
-                {
-                    // "e.g. IchildPos[26]->get(39, 0, 0) is the best child index for part 26, given the index (39) of its parent"
-
-                    int indexOfCurrentPart = IchildPos[k-1]->get(indexOfParentPart, 0, 0); // IchildPos[k-1][indexOfParentPart] = index of current part
-
-                    xptr[k-1] = promisingPositions[k-1]->get(COL, indexOfCurrentPart, 0); // col of this part
-                    yptr[k-1] = promisingPositions[k-1]->get(ROW, indexOfCurrentPart, 0); // row of this part
-                    mptr[k-1] = promisingPositions[k-1]->get(FI,  indexOfCurrentPart, 0); // fi  of this part
-
-                    // update the indexOfParentPart for part k (current part) --> to be used in the next iteration
-                    indexOfParentPart = indexOfCurrentPart;
-                }
-
-                // BEGIN mapping from row,col to image coordinates
-                int p_level = parts_level[k-1];
-                FPTYPE *pyra_scale = pyra->scale->getPtr();
-                FPTYPE scale = pyra_scale[p_level-1];
-                FPTYPE padx = pyra->padx;
-                FPTYPE pady = pyra->pady;
-                FPTYPE *p_sizx = parts->sizex->getPtr(0, 0, k-1);
-                FPTYPE *p_sizy = parts->sizey->getPtr(0, 0, k-1);
-
-                FPTYPE x1 = (xptr[k-1] - 1 - padx)*scale + 1;
-                FPTYPE y1 = (yptr[k-1] - 1 - pady)*scale + 1;
-                FPTYPE x2 = x1 + p_sizx[mptr[k-1]-1]*scale - 1;
-                FPTYPE y2 = y1 + p_sizy[mptr[k-1]-1]*scale - 1;
-                // END mapping from row,col to image coordinates
-
-                boxes->push_back(x1);
-                boxes->push_back(y1);
-                boxes->push_back(x2);
-                boxes->push_back(y2);
-            }
-
-            boxes->push_back(componentId);
-            boxes->push_back(rootScore);
-
-            currentDetectionNbr++;
-            (*detectionNbr)++;
-        }
-    }
-}
-#endif //NO_DT
-//--------------------------------------------------------------------
-
-// Original backtracking (WITH distance transform)
+// Original backtracking with distance transform
 void backtrack_C(FPTYPE thresh, myArray<FPTYPE> *rscore, myArray<int> **Ix, myArray<int> **Iy, myArray<int> **Ik, const Component *parts, const Feature_pyramid *pyra, int *parts_level, int componentId, /*output*/ std::vector<FPTYPE>* &boxes, int *detectionNbr)
 {
     int numparts = parts->filterid->getRows();
@@ -692,64 +523,6 @@ std::vector<FPTYPE>* detect_fast_C(const myArray<unsigned char> *img, const Mode
                                    /*OUTPUT*/ myArray<FPTYPE> ***copyOfResp = NULL,
                                    /*INPUT*/ Feature_pyramid *pyra = NULL)
 {
-#if LOGGING_ON
-    //debug
-    writeLog("detect_fast im=");
-    writeLog(img);
-
-    writeLog("detect_fast model.bias.w=");
-    writeLog(model->bias_w);
-    writeLog("detect_fast model.bias.i=");
-    writeLog(model->bias_i);
-
-    writeLog("detect_fast model.filters.w=");
-    for(int j = 0; j < model->filtersSz; j++)
-        writeLog(model->filters_w[j]);
-    writeLog("detect_fast model.filters.i=");
-    writeLog(model->filters_i);
-
-    writeLog("detect_fast model.defs.w=");
-    writeLog(model->defs_w);
-    writeLog("detect_fast model.defs.i=");
-    writeLog(model->defs_i);
-    writeLog("detect_fast model.defs.anchor=");
-    writeLog(model->defs_anchor);
-
-    for(int c = 0; c < model->componentsNbr; c++)
-    {
-        snprintf(buffer, sizeof(buffer), "detect_fast model.components{%d}.biasid=", c+1);
-        writeLog(buffer);
-        writeLog(model->components_biasid[c]);
-
-        snprintf(buffer, sizeof(buffer), "detect_fast model.components{%d}.filterid=", c+1);
-        writeLog(buffer);
-        writeLog(model->components_filterid[c]);
-
-        snprintf(buffer, sizeof(buffer), "detect_fast model.components{%d}.defid=", c+1);
-        writeLog(buffer);
-        writeLog(model->components_defid[c]);
-
-        snprintf(buffer, sizeof(buffer), "detect_fast model.components{%d}.parent=", c+1);
-        writeLog(buffer);
-        writeLog(model->components_parent);
-    }
-
-    writeLog("detect_fast model.pa=");
-    writeLog(model->pa);
-    writeLog("detect_fast model.maxsize=");
-    writeLog(model->maxsize);
-    writeLog("detect_fast model.interval=");
-    writeLog(model->interval);
-    writeLog("detect_fast model.sbin=");
-    writeLog(model->sbin);
-    writeLog("detect_fast model.len=");
-    writeLog(model->len);
-    writeLog("detect_fast model.thresh=");
-    writeLog(model->thresh);
-    writeLog("detect_fast model.obj=");
-    writeLog(model->obj);
-#endif
-
     bool isPyraManagedOutside = true;
     // Compute the feature pyramid and prepare filter
     if (pyra == NULL)
@@ -758,62 +531,10 @@ std::vector<FPTYPE>* detect_fast_C(const myArray<unsigned char> *img, const Mode
         isPyraManagedOutside = false;
     }
 
-#if LOGGING_ON
-    // debug
-    writeLog("detect_fast pyra.feat=");
-    for( int i = 0; i < pyra->max_scale; i++)
-        writeLog(pyra->feat[i]);
-    writeLog("detect_fast pyra.scale=");
-    writeLog(pyra->scale);
-    snprintf(buffer, sizeof(buffer), "detect_fast pyra.interval=%d .imy=%d .imx=%d .pady=%d .padx=%d", pyra->interval, pyra->imy, pyra->imx, pyra->pady, pyra->padx);
-    writeLog(buffer);
-#endif
-
     // Cache various statistics derived from model
     Component components[model->componentsNbr];
     myArray<FPTYPE> **filters;
     modelcomponents_C(model, pyra, /*outputs*/ components, &filters);
-
-#if LOGGING_ON
-    //debug
-    for(int c = 1; c <= model->componentsNbr; c++)
-    {
-        snprintf(buffer, sizeof(buffer), "detect_fast components{%d}=", c);
-        writeLog(buffer);
-
-        Component *p = &(components[c-1]);
-
-        writeLog("detect_fast components.biasid=");
-        writeLog(p->biasid);
-        writeLog("detect_fast components.filterid=");
-        writeLog(p->filterid);
-        writeLog("detect_fast components.defid=");
-        writeLog(p->defid);
-        writeLog("detect_fast components.parent=");
-        writeLog(p->parent);
-
-        writeLog("detect_fast components.b=");
-        writeLog(p->b);
-        writeLog("detect_fast components.biasI=");
-        writeLog(p->biasI);
-        writeLog("detect_fast components.sizex=");
-        writeLog(p->sizex);
-        writeLog("detect_fast components.sizey=");
-        writeLog(p->sizey);
-        writeLog("detect_fast components.w=");
-        writeLog(p->w);
-        writeLog("detect_fast components.defI=");
-        writeLog(p->defI);
-        writeLog("detect_fast components.scale=");
-        writeLog(p->scale);
-        writeLog("detect_fast components.startx=");
-        writeLog(p->startx);
-        writeLog("detect_fast components.starty=");
-        writeLog(p->starty);
-        writeLog("detect_fast components.step=");
-        writeLog(p->step);
-    }
-#endif
 
     myArray<FPTYPE> **pyra_feat = pyra->feat;
     int levels = pyra->max_scale;
@@ -859,8 +580,10 @@ std::vector<FPTYPE>* detect_fast_C(const myArray<unsigned char> *img, const Mode
                     const myArray<FPTYPE> *pyra_feat_level = pyra_feat[level-1];
                     int filtersNb =  model->filtersSz;
 #ifdef USE_CUDA
+                    // GPU VERSION
                     resp = fconv_cuda(pyra_feat_level, filters, 1, filtersNb);
 #else
+                    // CPU VERSION
                     resp = fconvMT_C(pyra_feat_level, filters, 1, filtersNb);
 
                     // take a deep copy of the resp for this level
@@ -878,17 +601,6 @@ std::vector<FPTYPE>* detect_fast_C(const myArray<unsigned char> *img, const Mode
                 for( int fi = 1; fi <= fNb; fi++)
                     parts_score[k-1][fi-1] = resp[f->get(k-1, fi-1) - 1];
 
-#if LOGGING_ON
-                // debug
-                for( int fi = 1; fi <= fNb; fi++)
-                {
-                    snprintf(buffer, sizeof(buffer), "rlevel=%d level=%d c=%d k=%d fi=%d", rlevel, level, c, k, fi);
-                    writeLog(buffer);
-                    writeLog("parts(k).score(:,:,fi)=");
-                    writeLog(parts_score[k-1][fi-1]);
-                }
-#endif
-
                 parts_level[k-1] = level;
             }
 
@@ -897,11 +609,6 @@ std::vector<FPTYPE>* detect_fast_C(const myArray<unsigned char> *img, const Mode
             for( int k = numparts; k >= 2; k--)
             {
                 int par = parts->parent->get(k-1); // parent id
-
-#if LOGGING_ON
-                snprintf(buffer, sizeof(buffer), "detect_fast for_k_#2 k=%d par=%d", k, par);
-                writeLog(buffer);
-#endif
 
                 myArray<FPTYPE> *msg;
                 passmsg_C( k, par, parts, parts_score, /*outputs*/ &msg, Ix, Iy, Ik);
@@ -962,22 +669,6 @@ std::vector<FPTYPE>* detect_fast_C(const myArray<unsigned char> *img, const Mode
                 }
             }
 
-#if LOGGING_ON
-            // debug
-            for( int fi = 1; fi <= fNb; fi++)
-            {
-                snprintf(buffer, sizeof(buffer), "rlevel=%d c=%d parts(1).score(:,:,%d)=", rlevel, c, fi);
-                writeLog(buffer);
-                writeLog(parts_score[1-1][fi-1]);
-            }
-            snprintf(buffer, sizeof(buffer), "rlevel=%d c=%d rscore=", rlevel, c);
-            writeLog(buffer);
-            writeLog(&rscore);
-            snprintf(buffer, sizeof(buffer), "rlevel=%d c=%d Ik=", rlevel, c);
-            writeLog(buffer);
-            writeLog(Ik[1-1]);
-#endif
-
             // Walk back down tree following pointers
             FPTYPE thresh = std::min(model->thresh, (FPTYPE) -1.0);
             backtrack_C(thresh, &rscore, Ix, Iy, Ik, parts, pyra, parts_level, c, /*output*/ boxes, &detectionNbr);
@@ -1009,240 +700,9 @@ std::vector<FPTYPE>* detect_fast_C(const myArray<unsigned char> *img, const Mode
     releaseCuda();
 #endif
 
-#if LOGGING_ON
-    // display detection boxes
-    writeLog("detect_fast boxes=");
-    writeLog(boxes, detectionNbr, 4*numparts+2);
-#endif
-
     return boxes;
 }
 
-//--------------------------------------------------------------------
-#if NO_DT
-// Calculate pose estimation withOUT distance transform
-std::vector<FPTYPE>* detect_fast_noDT(const myArray<unsigned char> *img, const Model *model, int _noOfCandidatePts)
-{
-    // Compute the feature pyramid and prepare filter
-    Feature_pyramid *pyra = featpyramid_C(img, model);
-
-    // Cache various statistics derived from model
-    Component components[model->componentsNbr];
-    myArray<FPTYPE> **filters;
-    modelcomponents_C(model, pyra, /*outputs*/ components, &filters);
-
-    myArray<FPTYPE> **pyra_feat = pyra->feat;
-    int levels = pyra->max_scale;
-    int componentsNb = model->componentsNbr;
-    int numparts = 0; // number of parts ; supposed to be constant over all components
-
-    std::vector<FPTYPE> *boxes = new std::vector<FPTYPE>; // detections boxes
-    int detectionNbr = 0; // number of detections
-    FPTYPE interval = model->interval;
-
-    int noOfCandidatePts = _noOfCandidatePts;
-
-    // Iterate over scales and components
-    for( int rlevel = 1; rlevel <= levels; rlevel++)
-    {
-        myArray<FPTYPE> **resp = NULL;
-
-        for( int c = 1; c <= componentsNb; c++)
-        {
-            Component *parts = &(components[c-1]);
-            numparts = model->partsNbr;
-            int parts_level[numparts];
-
-            myArray<FPTYPE> *promisingPositions[numparts];
-            // promisingPositions is a multidimensional array to store best scoring positions after filtering
-            // [int]    1st row of the structure stores the COLUMN coordinate (x) of the promising instance
-            // [int]    2nd row of the structure stores the ROW coordinate (y) of the promising instance;
-            // [int]    3rd row: filterId (ZERO INDEXED)
-            // [FPTYPE] 4th row: score of this coordinate (will be useful in passmsg_noDT)
-            // each column is a best scoring INSTANCE
-            // planes: just 1 plane
-            // each myArray is for a part number (e.g. 26 myArray for 26 parts)
-
-            int nbElements = -1, nbRows;
-
-            // Local scores
-            for( int k = 1; k <= numparts; k++)
-            {
-                int fNb = parts->filterid->getCols();
-                myArray<int> *f = parts->filterid;
-
-                FPTYPE scale = parts->scale->get(k-1);
-                int level = rlevel - scale*interval;
-                if( ! resp )
-                {
-                    // computed one time per rlevel
-                    const myArray<FPTYPE> *pyra_feat_level = pyra_feat[level-1];
-                    int filtersNb =  model->filtersSz;
-                    resp = fconvMT_C(pyra_feat_level, filters, 1, filtersNb);
-                }
-
-                //Get info on the response for this level (same for all filters, fi)
-                if (nbElements < 0)
-                {
-                    nbElements = resp[f->get(k-1, 0) - 1]->getNumberOfElements();
-                    nbRows = resp[f->get(k-1, 0) - 1]->getRows();
-                }
-
-                // check noOfCandidatePts size
-                if (noOfCandidatePts > nbElements)
-                    noOfCandidatePts = nbElements; //and reduce it if necessary
-
-                promisingPositions[k-1] = new myArray<FPTYPE>(4, noOfCandidatePts);
-
-                // a prio. queue to pick best score positions (pair: <score, index> )
-                std::priority_queue<std::pair<FPTYPE, int>, std::vector<std::pair<FPTYPE,int> >, PairComparator> scoresOfaPart;
-
-                for( int fi = 1; fi <= fNb; fi++)
-                {
-                    // response is recorded to parts_score:
-                    FPTYPE *responseData = resp[f->get(k-1, fi-1) - 1]->getPtr();
-
-                    //create a priority queue to store best scores
-                    FPTYPE minOfList = DBL_MAX;
-                    for (int ni=0; ni<nbElements; ni++)
-                    {
-                        if (ni < noOfCandidatePts) //we should have at least noOfCandidatePts elements
-                        {
-                            scoresOfaPart.push(std::pair<FPTYPE, int>(responseData[ni], (fi-1)*nbElements + ni));
-                            if (minOfList > responseData[ni]) minOfList = responseData[ni];
-                        }
-                        else if (responseData[ni] > minOfList)// we have enough elements, insert if it's bigger than the smaller element
-                        {
-                            scoresOfaPart.push(std::pair<FPTYPE, int>(responseData[ni], (fi-1)*nbElements + ni));
-                        }
-                        //the prio. queue will be larger than noOfCandidatePts, but it's ok, we'll pick just noOfCandidatePts of them in the next loop
-                    }
-                }
-
-                // fetch back all the max scores for this part and store them in the promisingPositions structure
-                int row=0, col=0, fi=0, ni=0;
-                for (int si = 0; si<noOfCandidatePts; si++)
-                {
-                    std::pair<FPTYPE, int> top = scoresOfaPart.top();
-                    fi = top.second / nbElements;
-                    ni = top.second % nbElements;
-                    col = ni / nbRows;
-                    row = ni % nbRows;
-                    //debug
-                    //std::cout << "\nScore: " << top.first << "\tRow: " << row << "\tCol: " << col << "\tfi: " << fi << "\tni = " << ni;
-
-                    promisingPositions[k-1]->set(col + 1, 0, si); //write COL coordinate to first row (1 indexed)
-                    promisingPositions[k-1]->set(row + 1, 1, si); //write ROW coordinate to second row (1 indexed)
-                    promisingPositions[k-1]->set(fi + 1,  2, si); //write fi info to third row (might be usefull) (1 indexed)
-                    promisingPositions[k-1]->set(top.first,  3, si); //write score to 4th row (will be usefull)
-                    //next two rows will be filled in passmsg_noDT
-
-                    scoresOfaPart.pop(); //we're done with the 1st elmnt of the prio. queue
-                }
-
-                parts_level[k-1] = level;
-            }
-
-            // debug
-            // for( int k = 0; k<numparts; k++)
-            // {
-            //     std::cout << "\n\nPART: " << k << " =====================================================\n";
-            //     for (int si=0; si<NO_OF_CAND_POS; si++)
-            //         std::cout << promisingPositions[k]->get(0, si) << "\t";
-            //     std::cout << std::endl;
-            //     for (int si=0; si<NO_OF_CAND_POS; si++)
-            //         std::cout << promisingPositions[k]->get(1, si) << "\t";
-            //     std::cout << std::endl;
-            //     for (int si=0; si<NO_OF_CAND_POS; si++)
-            //         std::cout << promisingPositions[k]->get(2, si) << "\t";
-            //     std::cout << std::endl;
-            // }
-
-
-            // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-            // MESSAGE PASSING STARTS HERE
-            // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-
-            // Walk from leaves to root of tree, passing message to parent
-            //---------------------------------------------------------------------
-            // for each parent part, this array will keep track best child position
-            // e.g. IchildPos[26]->get(39, 0, 0) is the best index for part 26, given the index (39) of its parent
-            // it's actually index for promisingPositions[26],
-            // you can get the col data like this: promisingPositions[26]->get(COL, 39, 0)
-            // "    "   "   "  row  "    "    "  : promisingPositions[26]->get(ROW, 39, 0)
-            // and so on..
-
-
-            myArray<int> *IchildPos[numparts];
-            myArray<int> **dummyHandle = &(IchildPos[0]);
-            *dummyHandle = new myArray<int>(1, 1, 1); //no parent info for the root part (easier to free memory this way)
-
-            for( int k = numparts; k >= 2; k--)
-            {
-                int par = parts->parent->get(k-1); // parent id
-
-                myArray<FPTYPE> *msg; //one entry for each row, single column only)
-                passmsg_noDT(k, par, parts, promisingPositions, /*outputs*/ &msg, IchildPos);
-
-                // update parent score
-                FPTYPE *msgData = msg->getPtr();
-                for (int pi=0; pi<noOfCandidatePts; pi++)
-                {
-                    FPTYPE valToAdd = msgData[pi];
-                    FPTYPE currentVal = promisingPositions[par-1]->get(SCORE, pi, 0);
-                    promisingPositions[par-1]->set(currentVal + valToAdd, SCORE, pi, 0);
-                }
-
-                delete msg;
-            }
-
-            // Add bias to root score
-            FPTYPE root_b = parts->b->get(1-1, 1-1, 1-1); // parts(1).b is a single value
-
-            //Another loop of NO_OF_CAND_POS to add bias to root scores (first array of promisingElements[])
-            for (int ri=0; ri<noOfCandidatePts; ri++)
-            {
-                FPTYPE curRootScore = promisingPositions[0]->get(SCORE, ri, 0);
-                FPTYPE sum = curRootScore + root_b;
-                promisingPositions[0]->set(sum, SCORE, ri, 0);
-            }
-
-            //Get the threshold from the model
-            FPTYPE thresh = std::min(model->thresh, (FPTYPE) -1.0);
-
-            // debug
-            //for (int i=0; i<noOfCandidatePts; i++) std::cout << "Root score for root candidate " << i << " is " << promisingPositions[0]->get(SCORE, i) << std::endl;
-            // debug
-
-            // Walk back down tree following pointers
-            backtrack_noDT(thresh, promisingPositions, IchildPos, parts, pyra, parts_level, c, /*output*/ boxes, &detectionNbr);
-
-            // free memory
-            for( int k = 1; k <= numparts; k++)
-            {
-                //                free(parts_score[k-1]);
-                delete promisingPositions[k-1];
-                delete IchildPos[k-1];
-            }
-        }
-
-        // free resp here
-        int len = model->filtersSz - 1 + 1;
-        for(int i = 0; i < len; i++)
-            delete resp[i];
-        free(resp);
-    }
-
-    delete_components(components, model->componentsNbr);
-    delete_featpyramid(&pyra);
-
-    //debug
-    //    std::cout << "\nTotal number of detections: " << detectionNbr << std::endl << std::endl;
-    //debug
-
-    return boxes;
-}
-#endif //NO_DT
 
 //--------------------------------------------------------------------
 
@@ -1276,9 +736,6 @@ void display_boxes(const std::vector<FPTYPE> *boxes, int partsNbr)
 //--------------------------------------------------------------------
 // calculate pose estimation with distance transform
 std::vector<FPTYPE>* detect_fast_withEpiConstraint(const myArray<unsigned char> *img, const Model *model,
-#ifdef WFV
-                                                   const std::vector<FPTYPE> *supportWeights,
-#endif
                                                    const std::vector<FPTYPE> *supportBoxes,
                                                    const EpipolarGeometry *epiGeometry,
                                                    myArray<FPTYPE>*** filterResponse,
@@ -1382,11 +839,7 @@ std::vector<FPTYPE>* detect_fast_withEpiConstraint(const myArray<unsigned char> 
 
 
                 // multiply epiHeatMap with multiplier (the amount of effect)
-#ifdef WFV
-                epiHeatMapMat = epiHeatMapMat * heatMultiplier * (*supportWeights)[k-1];
-#else
                 epiHeatMapMat = epiHeatMapMat * heatMultiplier;
-#endif
 
                 // add it to parts_score for that part
                 for( int fi = 1; fi <= fNb; fi++)
@@ -1472,11 +925,7 @@ std::vector<FPTYPE>* detect_fast_withEpiConstraint(const myArray<unsigned char> 
 
             // Walk back down tree following pointers
             FPTYPE thresh = std::min(model->thresh, (FPTYPE) -1.0);
-#ifdef WFV
-            thresh += heatMultiplier; // FIXME: what should we do here?
-#else
             thresh += heatMultiplier;
-#endif
             backtrack_C(thresh, &rscore, Ix, Iy, Ik, parts, pyra, parts_level, c, /*output*/ boxes, &detectionNbr);
 
 //            backtrack_C(&rscore, Ix, Iy, Ik, parts, pyra, parts_level, c, /*output*/ boxes); //--> no threshold version
@@ -1545,19 +994,6 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
     std::vector<FPTYPE> *boxesA_nms = not_nms_pick_best(boxesA, nbOfParts); //we don't need NMS when there are only one subject
 #endif //USE_NMS
 
-#ifdef WFV
-
-#ifdef HUMANEVA
-    std::vector<FPTYPE> estimatedYRErrors_A = YRerrorEstimator::estimatePartBasedError_mimo(boxesA_nms, viewA);
-#elif defined(UMPM)
-    std::size_t found = outputFolder.find_last_of("/");
-    std::string action = outputFolder.substr(found+1); // "p1_chair_2_f-wrt-s"
-    action.erase(action.end()-8, action.end()); // "p1_chair_2"
-    std::vector<FPTYPE> estimatedYRErrors_A = YRerrorEstimator::estimatePartBasedError_mimo(boxesA_nms, viewA, action);
-#endif
-
-#endif
-
 #ifdef SAVE_IMAGES
     std::sprintf(buffer, "%s/%s_A_Iteration_0.png", outputFolder.c_str(), imgFileA.c_str());
     DisplayTools::saveDetection(*imgA, *boxesA_nms, nbOfParts, buffer);
@@ -1589,48 +1025,6 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
     std::vector<FPTYPE> *boxesB_nms = not_nms_pick_best(boxesB, nbOfParts); // we don't need NMS when there are only one subject
 #endif
 
-#ifdef WFV
-    /////// VIEWPOINT WEIGHT
-#ifdef HUMANEVA
-    std::vector<FPTYPE> estimatedYRErrors_B = YRerrorEstimator::estimatePartBasedError_mimo(boxesB_nms, viewB);
-#elif defined(UMPM)
-    std::vector<FPTYPE> estimatedYRErrors_B = YRerrorEstimator::estimatePartBasedError_mimo(boxesB_nms, viewB, action);
-#endif
-    
-    std::vector<FPTYPE> viewA_weights, viewB_weights;
-
-    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // Compare part based errors and fill these weights
-    for (int k=0; k<nbOfParts; k++)
-    {
-        std::map<int,FPTYPE>::iterator it = singleViewMedianErrors.find(k); //look for the k'th part in limb list
-        FPTYPE singleViewMedianError = it->second;
-        it = expectedInaccuracyForSingleViewErrEst.find(k); //look for the k'th part in limb list
-        FPTYPE expInacForSviewErrEst = it->second;
-
-        (estimatedYRErrors_A.at(k) > singleViewMedianError+expInacForSviewErrEst) ? viewA_weights.push_back(0.0) : viewA_weights.push_back(1.0);
-        (estimatedYRErrors_B.at(k) > singleViewMedianError+expInacForSviewErrEst) ? viewB_weights.push_back(0.0) : viewB_weights.push_back(1.0);
-
-        // additional mechanism to get more improvements:
-        if (viewA_weights.at(k) == 0.0 && viewB_weights.at(0.0)) // if both weights are "killed"
-        {
-            // TODO: we can try adding expectedInac to the margin
-            FPTYPE margin = singleViewMedianError;
-            // if A is better by a significant margin
-            if ((estimatedYRErrors_B.at(k) - estimatedYRErrors_A.at(k)) > margin)
-            {
-                viewA_weights.at(k) = 1.0; // treat A as a "good part"
-            }
-            // else if B is better by a significant margin
-            else if ((estimatedYRErrors_A.at(k) - estimatedYRErrors_B.at(k)) > margin)
-            {
-                viewB_weights.at(k) = 1.0; // treat B as a "good part"
-            }
-        }
-    }
-    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-#endif // elif defined(WFV)
 
 #ifdef SAVE_IMAGES
     std::sprintf(buffer, "%s/%s_B_Iteration_0.png", outputFolder.c_str(), imgFileB.c_str());
@@ -1696,22 +1090,9 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
                            *targetToSupportEpiLines = NULL; //epipolar lines on supportImg, based on boxes at targetImg
     myArray<FPTYPE> ***targetFilterResponse = NULL, ***supportFilterResponse = NULL;
     Feature_pyramid *targetPyra = NULL, *supportPyra = NULL;
-#ifdef WFV
-    std::vector<FPTYPE> *targetWeights = NULL, *supportWeights = NULL;
-#endif
 
-#ifdef WFV
-    // sum of errors
-    FPTYPE sumOfErrorsA = 0.0, sumOfErrorsB = 0.0;
-    for(std::vector<FPTYPE>::size_type i=0; i<estimatedYRErrors_B.size(); i++)
-    {
-        sumOfErrorsA += estimatedYRErrors_A[i];
-        sumOfErrorsB += estimatedYRErrors_B[i];
-    }
-    if (sumOfErrorsB >= sumOfErrorsA) // we estimate higher part based error on view B ==> we trust A better, start with it
-#else
+
     if (scoreA >= scoreB)
-#endif
     {
         //just assigning the pointers
         targetImg = imgB;  //keep these pointers to identify later
@@ -1719,24 +1100,14 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
         supportToTargetEpiLines = epiGeometryA2B; epiGeometryA2B = NULL;
         targetFilterResponse = filterResponseB;
         targetPyra = pyraB;
-#ifdef WFV
-        targetWeights = &viewB_weights;
-#endif
 
         supportImg = imgA;  //keep these pointers to identify later
         supportBoxes = boxesA_nms; boxesA_nms = NULL;
         targetToSupportEpiLines = epiGeometryB2A; epiGeometryB2A = NULL;
         supportFilterResponse = filterResponseA;
         supportPyra = pyraA;
-#ifdef WFV
-        supportWeights = &viewA_weights;
-#endif
     }
-#ifdef WFV
-    else //if( sumOfErrorsB < sumOfErrorsA )
-#else
     else //if( scoreA < scoreB)
-#endif
     {
         //just assigning the pointers
         targetImg = imgA;  //keep these pointers to identify later
@@ -1744,40 +1115,28 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
         supportToTargetEpiLines = epiGeometryB2A; epiGeometryB2A = NULL;
         targetFilterResponse = filterResponseA;
         targetPyra = pyraA;
-#ifdef WFV
-        targetWeights = &viewA_weights;
-#endif
+
         supportImg = imgB;  //keep these pointers to identify later
         supportBoxes = boxesB_nms; boxesB_nms = NULL;
         targetToSupportEpiLines = epiGeometryA2B; epiGeometryA2B = NULL;
         supportFilterResponse = filterResponseB;
         supportPyra = pyraB;
-#ifdef WFV
-        supportWeights = &viewB_weights;
-#endif
-    }
-
-
-    // TODO parametrize these two (with default values)
-    int iteration = 1;
-    double actualEpsilon = DBL_MAX;
-    double previousEpsilon = DBL_MAX;
-    int nbOfBoxes = 4*nbOfParts+2; //last two is the component number and detection score
-    int nbOfDetections;
+    }    
 
 
     // ================================================================================================
     //  START JOINT DETECTION HERE
     // ================================================================================================
-
+    int iteration = 1;
+    double actualEpsilon = DBL_MAX;
+    double previousEpsilon = DBL_MAX;
+    int nbOfBoxes = 4*nbOfParts+2; //last two is the component number and detection score
+    int nbOfDetections;
     std::vector<FPTYPE> epsilons;
     do
     {
         // run it with supporting information
         std::vector<FPTYPE> *newBoxes = detect_fast_withEpiConstraint(targetImg, model,
-#ifdef WFV
-                                                                      supportWeights,
-#endif
                                                                       supportBoxes, supportToTargetEpiLines,
                                                                       targetFilterResponse, targetPyra);
         //targetEpiLines: epilines that are in targetImg, given a point in supportImg
@@ -1884,9 +1243,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
         std::swap(supportToTargetEpiLines, targetToSupportEpiLines);
         std::swap(targetFilterResponse, supportFilterResponse);
         std::swap(targetPyra, supportPyra);
-#ifdef WFV
-        std::swap(targetWeights, supportWeights);
-#endif
+
         if (epsilons.size() > 2)
             std::cout << "Iteration " << iteration << " completed with new score: " << (*supportBoxes)[4*nbOfParts+1] << std::endl
                       << "\tActual eps: " << actualEpsilon
@@ -1912,19 +1269,8 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
         std::ofstream txtFile;
         txtFile.open(buffer);
         txtFile << iteration-1 << "\n";
-        for (std::vector<FPTYPE>::iterator it = epsilons.begin() ; it != epsilons.end(); ++it) txtFile << *it<< "\n";
-#if defined(WFV) || defined(WFV_CNN)
-        txtFile << "\n------- Weight Info -------\n";
-        txtFile << "Est. YR errors on A: " << std::endl;
-        for (std::vector<FPTYPE>::iterator it = estimatedYRErrors_A.begin() ; it != estimatedYRErrors_A.end(); ++it){ txtFile << *it << "\n";}
-        txtFile << "\nEst. YR errors on B: " << std::endl;
-        for (std::vector<FPTYPE>::iterator it = estimatedYRErrors_B.begin() ; it != estimatedYRErrors_B.end(); ++it){ txtFile << *it << "\n";}
-        txtFile << "\nAssigned Weights for A: " << std::endl;
-        for (std::vector<FPTYPE>::iterator it = viewA_weights.begin() ; it != viewA_weights.end(); ++it){ txtFile << *it << "\t";}
-        txtFile << "\nAssigned Weights for B: " << std::endl;
-        for (std::vector<FPTYPE>::iterator it = viewB_weights.begin() ; it != viewB_weights.end(); ++it){ txtFile << *it << "\t";}
-        std::cout << std::endl;
-#endif
+        for (std::vector<FPTYPE>::iterator it = epsilons.begin() ; it != epsilons.end(); ++it) 
+            txtFile << *it<< "\n";
         txtFile.close();
     }
 #endif
@@ -1971,10 +1317,6 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
     // FIXME: we got a segmentation fault here.
     //    delete filterResponseA;
     //    delete filterResponseB;
-
-    // TODO do we need to clean up any more memory?
-    //--> filterResponses, boxes, epiGeometry objects are cleared
-    //--> boxpair is deleted outside
 
     return boxPair;
 }
@@ -3413,33 +2755,6 @@ int main(const int argc, const char **argv)
     const char *modelFileName = NULL;
 
     
-//----------------------------------------------------------------------------
-//  Read arguments for NO_DT version
-//----------------------------------------------------------------------------
-#ifdef NO_DT // No distance transform
-    int nbOfCandidatePoints = NO_OF_CAND_PTS;
-
-    if (argc <= 1)
-    {
-        printf("Usage: %s image_file [numberOfCandidatePoints]\n", argv[0]);
-        printf("Example: %s ../resources/im0110.jpg 100\n", argv[0]);
-        return 1;
-    }
-    if (argc >= 2)
-    {
-        imageFileName = argv[1];
-    }
-    if (argc >= 3)
-    {
-        nbOfCandidatePoints = atoi(argv[2]);
-        if (nbOfCandidatePoints < 1)
-        {
-            printf("Number of candidate points can not be less then 1.\n");
-            return 1;
-        }
-    }
-#endif //NO_DT
-    
     
 //----------------------------------------------------------------------------
 //  Read arguments for MULTIVIEW version
@@ -3615,7 +2930,7 @@ int main(const int argc, const char **argv)
     }
 
 //----------------------------------------------------------------------------
-//  Read arguments for Original version
+//  Read arguments for the Single-view version
 //----------------------------------------------------------------------------
 #else // with distance transform && single view (NOT MULTIVIEW NOR MV_PTC)
 
@@ -3676,35 +2991,6 @@ int main(const int argc, const char **argv)
 
     // load model
     Model *model = load_model(modelFileName);
-
-    
-//----------------------------------------------------------------------------
-//  Execute detect_fast for NO_DT version
-//----------------------------------------------------------------------------
-#ifdef NO_DT
-    top(0);
-    std::vector<FPTYPE> *boxes = detect_fast_noDT(&img, model, nbOfCandidatePoints);
-    FPTYPE duration = top(0);
-
-    // display boxes
-    printf("Detections before NMS\n");
-    display_boxes(boxes, model->partsNbr);
-
-    // non maximal suppression
-#ifdef USE_NMS
-    std::vector<FPTYPE> *boxes_nms = nms(boxes, .1, model->partsNbr);
-#else
-    std::vector<FPTYPE> *boxes_nms = not_nms_pick_best(boxes, model->partsNbr);
-#endif
-    printf("\nDetections after NMS\n");
-
-    display_boxes_csvCompatible(boxes_nms, model->partsNbr);
-
-    // display run time
-    printf("\ndetection took %.2f seconds ", duration/1000.0);
-    printf("with %d candidate points.\n", nbOfCandidatePoints);
-#endif //NO_DT
-    
     
     
 //----------------------------------------------------------------------------
@@ -3823,6 +3109,9 @@ int main(const int argc, const char **argv)
     char buffer[350];
     std::sprintf(buffer, "%s/%s_Pose.txt", outputFolder.c_str(), imgFileA.c_str());
     saveBoxCenters(boxes_nms, model->partsNbr, buffer);
+
+#else
+    DisplayTools::displayDetection(cvImg, *boxes_nms, model->partsNbr, 0);
 #endif //SAVE_TEXT
 
     // display run time

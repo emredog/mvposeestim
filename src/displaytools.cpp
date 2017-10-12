@@ -314,12 +314,6 @@ void DisplayTools::saveDetection(const myArray<uchar> &myArr, const std::vector<
             //rectangle
             cv::rectangle(imgRGB, p1, p2, colorSet.at(p), LINE_THICKNESS);
         }
-
-        // display score -- FIXME
-        //        int offset = imgRGB.size().height / 12;
-        //        std::sprintf(buffer, "Score %d %.3f", d+1, boxes[d*boxes.size() + 4*partsNbr + 1]);
-        //        cv::putText(imgRGB, buffer, cv::Point2i(offset, imgRGB.size().height - (d+1)*offset),
-        //                    cv::FONT_HERSHEY_PLAIN, 1.2, cv::Scalar(0,0,255));
     }
 
     if (!cv::imwrite(fileName, imgRGB))
@@ -479,12 +473,6 @@ void DisplayTools::saveEpipolarLines(const myArray<uchar> &myArr, const std::vec
     {
         PointPair ptPair = allEpiPoints.at(p);
 
-        //project the point to the given image scale
-        //        ptPair.first.x *= scale;
-        //        ptPair.first.y *= scale;
-        //        ptPair.second.x *= scale;
-        //        ptPair.second.y *= scale;
-
         // draw given line with cv::line function
         cv::line(imRGBresized, ptPair.first, ptPair.second, colorSet.at(p), LINE_THICKNESS);
     }
@@ -501,7 +489,6 @@ void DisplayTools::saveEpipolarLinesPartBased(const myArray<uchar> &myArr, const
     int rows = myArr.getRows();
     int cols = myArr.getCols();
 
-    int origRows = ROWS;
     // scaling is assumed same in X and Y dimensions
 
     //create a cv::mat from myArray
@@ -522,8 +509,6 @@ void DisplayTools::saveEpipolarLinesPartBased(const myArray<uchar> &myArr, const
     //convert img to RGB (so that the boxes may have different colors)
     cv::Mat imgRGB, imRGBClean;
     cv::cvtColor(mat, imRGBClean, cv::COLOR_GRAY2BGR);
-    //    cv::Mat imRGBresized;
-    //    cv::resize(imgRGB, imRGBresized, cv::Size(origCols, origRows));
 
     //draw every line on the image
     for(int p = 0; p < partsNbr; p++)
@@ -538,8 +523,6 @@ void DisplayTools::saveEpipolarLinesPartBased(const myArray<uchar> &myArr, const
         if (!cv::imwrite(buffer, imgRGB))
             std::cerr << "Imwrite failed for DisplayTools::saveEpipolarLinesPartBased !\n\n";
     }
-
-
 }
 
 void DisplayTools::saveOneEpipolarLine(const myArray<uchar> &myArr, LineCoefs &line, const char *fileName)
