@@ -2692,14 +2692,6 @@ void printVersionInfo()
     
 
     
-    std::cout << "\tNO_DT :    \t";
-#ifdef NO_DT
-    std::cout << "yes\t";
-#else
-    std::cout << "no\t";
-#endif
-    std::cout << "(Omit distance transform while optimizing poses)\n";
-    
     std::cout << "\tUSE_NMS :\t";
 #ifdef USE_NMS
     std::cout << "yes\t";
