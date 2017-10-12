@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<params>
+	<minHmMultiplier>0.07</minHmMultiplier>
+	<maxHmMultiplier>0.07</maxHmMultiplier>
+	<hmStep>0.1</hmStep>
+	<minPtMultuplier>0.1</minPtMultuplier>
+	<maxPtMultiplier>0.5</maxPtMultiplier>
+	<ptStep>0.1</ptStep>
+	<yrmvAutoExePath>/home/emredog/qt-builds/build-yrmv_automator-Desktop-Release/yrmv_automator</yrmvAutoExePath>
+	<dataDir>/media/emredog/research-data/HumanEva-I/set_TRAIN_subset2/</dataDir>
+	<epipolarDir>/media/emredog/research-data/HumanEva-I/EpipolarLines/</epipolarDir>
+	<modelFile>/home/emredog/git/yrposeestim/C-version/resources/HumanEva_sce02_model_07.txt</modelFile>
+	<detectFastExe>/home/emredog/git/yrposeestim/C-version/build/detect_fast_C_MVPTC_LESSLEVELS</detectFastExe>
+	<convertModelExe>/home/emredog/qt-builds/build-ConvertModel-Desktop-Release/ConvertModel</convertModelExe>
+	<convertModelAutomatorExe>/home/emredog/qt-builds/build-ConvertModel_automator-Desktop-Release/ConvertModel_automator</convertModelAutomatorExe>
+	<calc2dErrorExe>/home/emredog/qt-builds/build-Calc2DError-Desktop-Release/Calc2DMeanError</calc2dErrorExe>
+	<calc2dErrorAutomatorExe>/home/emredog/qt-builds/build-Calc2DError_automator-Desktop-Release/Calc2DError_automator</calc2dErrorAutomatorExe>
+	<groundTruthFolder>/media/emredog/research-data/HumanEva-I/GroundTruth-pose/</groundTruthFolder>
+	<outputFolder>/home/emredog/output/20160118_learning_mv/</outputFolder>
+	<prefixFormat>%1_%2_%3_%4-%5</prefixFormat>
+	<fileToSkip>/home/emredog/git/yrposeestim/Yang-20121128-pose-release-ver1.3/code-full/List_of_positive_samples/EmptyFile.txt</fileToSkip>
+	<maxIterations>12</maxIterations>
+	<requiredEpsilon>0.1</requiredEpsilon>
+	<hmmskip>10.0</hmmskip>
+	<hmmskip>15.0</hmmskip>
+	<ptScoresDir>/media/emredog/research-data/HumanEva-I/PartTypeScores/</ptScoresDir>
+	<ptskip>10.0</ptskip>
+	<ptskip>10.0</ptskip>
+</params>
+
+
