@@ -2052,9 +2052,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
                                                                                   const PartTypeCompat* ptCompatA2B, const PartTypeCompat* ptCompatB2A,
                                                                                   int maxIterations = 4, FPTYPE requiredEpsilon = 0.1)
 {
-    std::cout << "Running detect_fast_mvptc with maximum iterations: " << maxIterations << " and required epsilon: " << requiredEpsilon << std::endl;
-    
-    char buffer[400]; //for filenames and stuff
+    std::cout << "Running detect_fast_mvptc with maximum iterations: " << maxIterations << " and required epsilon: " << requiredEpsilon << std::endl;    
     
     std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > boxPair(NULL, NULL);
     
@@ -2128,6 +2126,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
 
     
 #ifdef SAVE_IMAGES
+    char buffer[400]; //for filenames and stuff
     std::sprintf(buffer, "%s/%s_A_Iteration_0.png", outputFolder.c_str(), imgFileA.c_str());
     DisplayTools::saveDetection(*imgA, *boxesA_nms, nbOfParts, buffer);
 //    //std::sprintf(buffer, "%s/%s_A_Iteration_0", outputFolder.c_str(), imgFileA.c_str());
@@ -2251,11 +2250,12 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
 #endif
     
 #ifdef SAVE_TEXT
+    char buffer_text[400];
     //save boxes
-    std::sprintf(buffer, "%s/%s_Solo_A_Pose.txt", outputFolder.c_str(), imgFileA.c_str());
-    saveBoxCenters(boxesA_nms, model->partsNbr, buffer);
-    std::sprintf(buffer, "%s/%s_Solo_B_Pose.txt", outputFolder.c_str(), imgFileB.c_str());
-    saveBoxCenters(boxesB_nms, model->partsNbr, buffer);
+    std::sprintf(buffer_text, "%s/%s_Solo_A_Pose.txt", outputFolder.c_str(), imgFileA.c_str());
+    saveBoxCenters(boxesA_nms, model->partsNbr, buffer_text);
+    std::sprintf(buffer_text, "%s/%s_Solo_B_Pose.txt", outputFolder.c_str(), imgFileB.c_str());
+    saveBoxCenters(boxesB_nms, model->partsNbr, buffer_text);
 #endif
     
     //clean up memory
@@ -2674,14 +2674,6 @@ void printVersionInfo()
 #endif
     std::cout << "(Multiview pose estimation with part type compatibility )\n";
 
-    std::cout << "\tWFV :\t\t";
-#ifdef WFV
-    std::cout << "yes\t";
-#else
-    std::cout << "no\t";
-#endif
-    std::cout << "(Multiview pose estimation with Adaptive Viewpoint Selection [can be used with MV or MV_PTC] )\n";
-
     std::cout << "\tAVS :\t";
 #ifdef AVS
     std::cout << "yes\t";
@@ -2689,9 +2681,7 @@ void printVersionInfo()
     std::cout << "no\t";
 #endif
     std::cout << "(Multiview pose estimation with Adaptive Viewpoint Selection on ConvNets [can be used with MV or MV_PTC] )\n";
-    
-
-    
+        
     std::cout << "\tUSE_NMS :\t";
 #ifdef USE_NMS
     std::cout << "yes\t";
@@ -2834,7 +2824,7 @@ int main(const int argc, const char **argv)
 //  Read arguments for MV_PTC version
 //----------------------------------------------------------------------------
 #elif defined(MV_PTC)
-    int maxIterations = 4;
+    int maxIterations = 12;
     double requiredEpsilon = 0.1;
     outputFolder = "./";
     const char *secondImageFileName = NULL;
@@ -2846,7 +2836,7 @@ int main(const int argc, const char **argv)
     if (argc != 13) //let's force the user to input all arguments
     {
         printf("Usage: %s image_fileA image_fileB epipolarGeometryFileBtoA epipolarGeomteryFileBtoA partTypeScoreFileBtoA partTypeScoreAtoB maxIterations requiredEpsilon OutputFolderForSaving modelFileName HeatMapMultiplier PartTypeMultiplier\n\n", argv[0]);
-        printf("Example: %s ../resources/im0110A.jpg ../resources/im0110B.jpg ../resources/epiBtoA.csv ../resources/epiAtoB.csv ../resources/partTypeScrBtoA.csv ../resources/partTypeScrAtoB.csv 12 0.1 ../output ../resources/model.txt 0.025 0.01\n", argv[0]);
+        printf("Example: %s ../resources/im0110A.jpg ../resources/im0110B.jpg ../resources/epiBtoA.csv ../resources/epiAtoB.csv ../resources/partTypeScrBtoA.csv ../resources/partTypeScrAtoB.csv 12 0.1 ../output ../resources/model.txt 0.07 0.03\n", argv[0]);
         return 1;
     }
     
@@ -2861,8 +2851,8 @@ int main(const int argc, const char **argv)
     requiredEpsilon = atof(argv[8]);
     outputFolder = std::string(argv[9]);
     modelFileName = argv[10];
-    heatMultiplier = atof(argv[11]);
-    partTypeMultiplier = atof(argv[12]);
+    heatMultiplier = atof(argv[11]); //use 0.07 if unsure
+    partTypeMultiplier = atof(argv[12]);  //use 0.03 if unsure
     
     //keep track of filenames for debug purposes
     {
@@ -3066,6 +3056,9 @@ int main(const int argc, const char **argv)
     saveBoxCenters(boxPair.first, model->partsNbr, buffer);
     std::sprintf(buffer, "%s/%s_B_Pose.txt", outputFolder.c_str(), imgFileB.c_str());
     saveBoxCenters(boxPair.second, model->partsNbr, buffer);
+#else 
+    DisplayTools::displayDetection(img, *(boxPair.first), model->partsNbr, 0);
+    DisplayTools::displayDetection(cvSecondImg, *(boxPair.second), model->partsNbr, 0);
 #endif //SAVE_TEXT
     
     // display run time
