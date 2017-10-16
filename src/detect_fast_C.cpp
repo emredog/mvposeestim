@@ -10,16 +10,16 @@
 #define MINLEVEL -1 // if negative, levels calculated during training will be used
 #define MAXLEVEL -1 // else, these levels will be used
 
-#if defined(WFV) || defined(AVS) // WEIGHTS FOR VIEWPOINTS
+#ifdef AVS // ADAPTIVE VIEWPOINT SELECTION
 
 #if defined(HUMANEVA)
 #define ROWS 484;
 #define COLS 644;
-std::string predictionFile = "/home/emredog/git/yrposeestim/yr_multiview_matlab/pose-release-FULL-ver1.3/code-basic/WeightsForViewpoints/wfv_data/predictions/finetune_he_06_predictions.csv";
+std::string predictionFile = "../resources/error_predictions_he.csv";
 #elif defined(UMPM)
 #define ROWS 486
 #define COLS 644
-std::string predictionFile = "/home/emredog/git/yrposeestim/yr_multiview_matlab/pose-release-FULL-ver1.3/code-basic/WeightsForViewpoints/wfv_data/predictions/finetune_umpm_16_predictions.csv";
+std::string predictionFile = "../resources/error_predictions_umpm.csv";
 #endif
 
 // single view median errors from training set
@@ -158,7 +158,7 @@ std::map<int, FPTYPE> initExpectedErrEstInaccuracy()
 
 std::map<int, FPTYPE> expectedInaccuracyForSingleViewErrEst = initExpectedErrEstInaccuracy();
 
-#endif // if defined(WFV) || defined(AVS)
+#endif // ifdef AVS
 
 #if WITH_MATLAB
 #include "mex.h"
@@ -1788,7 +1788,7 @@ std::vector<FPTYPE>* detect_fast_C_pt(const myArray<unsigned char> *img, const M
 //--------------------------------------------------------------------
 // Calculate pose estimation with epipolar constraints + part type compatibility
 std::vector<FPTYPE>* detect_fast_withEpiConstraint_and_PTC(const myArray<unsigned char> *img, const Model *model,
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
                                                            const std::vector<FPTYPE> *supportWeights,
 #endif
                                                            const std::vector<FPTYPE> *supportBoxes,
@@ -1881,7 +1881,7 @@ std::vector<FPTYPE>* detect_fast_withEpiConstraint_and_PTC(const myArray<unsigne
             // FIXME: merge this with the for loop above
             for( int k = 1; k <= numparts; k++)
             {
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
                 if ((*supportWeights)[k-1] == 0) // nothing to do for this part
                     continue;
 #endif
@@ -1911,7 +1911,7 @@ std::vector<FPTYPE>* detect_fast_withEpiConstraint_and_PTC(const myArray<unsigne
                                                                              parts_score[k-1][0]->getRows(), parts_score[k-1][0]->getCols()); //desired size of the heatmap
                 
                 // multiply the heatmap with the multiplier
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
                 epiHeatMapMat = epiHeatMapMat * heatMultiplier * (*supportWeights)[k-1];
 #else
                 epiHeatMapMat = epiHeatMapMat * heatMultiplier;
@@ -1921,7 +1921,7 @@ std::vector<FPTYPE>* detect_fast_withEpiConstraint_and_PTC(const myArray<unsigne
                 for( int fi = 1; fi <= fNb; fi++)
                 {
                     // fetch the compatibility score based on part type on the other view, filter type at hand (f1-1) and part at hand (k-1)
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
                     FPTYPE additionalPartTypeScore = partTypeMultiplier * (*supportWeights)[k-1] * ptCompatScores->get(partTypeOnSupportView-1, fi-1, k-1);
 #else
                     FPTYPE additionalPartTypeScore = partTypeMultiplier * ptCompatScores->get(partTypeOnSupportView-1, fi-1, k-1);
@@ -2008,7 +2008,7 @@ std::vector<FPTYPE>* detect_fast_withEpiConstraint_and_PTC(const myArray<unsigne
             
             // Walk back down tree following pointers
             FPTYPE thresh = std::min(model->thresh, (FPTYPE) -1.0);
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
             thresh += heatMultiplier; // FIXME: what should we do here?
 #else
             thresh += heatMultiplier;
@@ -2089,27 +2089,21 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
     std::vector<FPTYPE> *boxesA_nms = not_nms_pick_best(boxesA, nbOfParts, (*partTypesA), partTypesA_nms); // we don't need NMS when there are only one subject
 #endif   //USE_NMS
 
-
-#ifdef WFV // ESTIMATE ERRORS FOR SINGLEVIEW YR
     
-#ifdef HUMANEVA
-    std::vector<FPTYPE> estimatedYRErrors_A = YRerrorEstimator::estimatePartBasedError_mimo(boxesA_nms, viewA);
-#elif defined(UMPM)
-    std::size_t found = outputFolder.find_last_of("/");
-    std::string action = outputFolder.substr(found+1); // "p1_chair_2_f-wrt-s"
-    action.erase(action.end()-8, action.end()); // "p1_chair_2"
-    std::vector<FPTYPE> estimatedYRErrors_A = YRerrorEstimator::estimatePartBasedError_mimo(boxesA_nms, viewA, action);
-#endif
-    
-#elif defined(AVS)
+#ifdef AVS
     EstimateYrErrorCNN estCNN(predictionFile.c_str());
 #ifdef HUMANEVA
     std::size_t found = outputFolder.find_last_of("/");
     std::string subject = outputFolder.substr(found+1); // "S1_Box_1_C1-wrt-C2"
     subject.erase(subject.begin()+2, subject.end()); // "S1"
+    std::cout << subject.c_str() << std::endl;
     std::string action = outputFolder.substr(found+1); // "S1_Box_1_C1-wrt-C2"
     action.erase(action.begin(), action.begin()+3); // "Box_1_C1-wrt-C2"
     action.erase(action.end()-12, action.end()); // "Box"
+    std::cout << action.c_str() << std::endl;
+
+    std::cout << viewA.c_str() << std::endl;
+    std::cout << frame << std::endl;
     std::vector<FPTYPE> estimatedYRErrors_A = estCNN.getErrors(subject, action, viewA, frame);
 #elif defined(UMPM)
     std::size_t found = outputFolder.find_last_of("/");
@@ -2159,18 +2153,8 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
     std::vector<FPTYPE> *boxesB_nms = not_nms_pick_best(boxesB, nbOfParts, (*partTypesB), partTypesB_nms); //we don't need to use NMS when there are only one subject
 #endif
 
-#ifdef WFV // ESTIMATE ERRORS FOR SINGLEVIEW YR
 
-#ifdef HUMANEVA
-    std::vector<FPTYPE> estimatedYRErrors_B = YRerrorEstimator::estimatePartBasedError_mimo(boxesB_nms, viewB);
-#elif defined(UMPM)
-    std::size_t found = outputFolder.find_last_of("/");
-    std::string action = outputFolder.substr(found+1); // "p1_chair_2_f-wrt-s"
-    action.erase(action.end()-8, action.end()); // "p1_chair_2"
-    std::vector<FPTYPE> estimatedYRErrors_B = YRerrorEstimator::estimatePartBasedError_mimo(boxesB_nms, viewB, action);
-#endif
-
-#elif defined(AVS)
+#ifdef AVS
 #ifdef HUMANEVA
     // we already fetched action and subject for estimatedYRErrors_A
     std::vector<FPTYPE> estimatedYRErrors_B = estCNN.getErrors(subject, action, viewB, frame);
@@ -2188,7 +2172,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
 
 
 
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
     /////// VIEWPOINT WEIGHT
     
     std::vector<FPTYPE> viewA_weights, viewB_weights;
@@ -2199,10 +2183,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
     {
         std::map<int,FPTYPE>::iterator it = singleViewMedianErrors.find(k); //look for the k'th part in limb list
         FPTYPE singleViewMedianError = it->second;
-#ifdef WFV
-        it = expectedInaccuracyForSingleViewErrEst.find(k); //look for the k'th part in limb list
-        FPTYPE expInacForSviewErrEst = it->second;
-#elif defined(AVS)
+#ifdef AVS
         it = expectedInaccuracyForSingleViewErrEst.find(k); //look for the k'th part in limb list
         FPTYPE expInacForSviewErrEst = it->second;
         // FPTYPE expInacForSviewErrEst = 0.0;
@@ -2228,7 +2209,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
     }
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
-#endif // defined(WFV) || defined(AVS)
+#endif // defined(AVS)
     
 #ifdef SAVE_IMAGES
     std::sprintf(buffer, "%s/%s_B_Iteration_0.png", outputFolder.c_str(), imgFileB.c_str());
@@ -2304,12 +2285,12 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
     const PartTypeCompat *supportToTargetPTScores = NULL,
                          *targetToSupportPTScores = NULL;
     Feature_pyramid *targetPyra = NULL, *supportPyra = NULL;
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
     std::vector<FPTYPE> *targetWeights = NULL, *supportWeights = NULL;
 #endif
 
 
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
     // sum of errors
     FPTYPE sumOfErrorsA = 0.0, sumOfErrorsB = 0.0;
     for(std::vector<FPTYPE>::size_type i=0; i<estimatedYRErrors_B.size(); i++)
@@ -2318,7 +2299,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
         sumOfErrorsB += estimatedYRErrors_B[i];
     }
     if (sumOfErrorsB >= sumOfErrorsA) // we estimate higher part based error on view B ==> we trust A better, start with it
-#else // not WFV nor AVS
+#else // not AVS
     if (scoreA >= scoreB)
 #endif
     {
@@ -2330,7 +2311,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
         supportToTargetPTScores = ptCompatA2B; ptCompatA2B = NULL;
         targetFilterResponse = filterResponseB;
         targetPyra = pyraB;
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
         targetWeights = &viewB_weights;
 #endif
         
@@ -2341,15 +2322,11 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
         targetToSupportPTScores = ptCompatB2A; ptCompatB2A = NULL;
         supportFilterResponse = filterResponseA;
         supportPyra = pyraA;
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
         supportWeights = &viewA_weights;
 #endif
     }
-#if defined(WFV) || defined(AVS)
-    else //if( sumOfErrorsB < sumOfErrorsA )
-#else
-    else //if( scoreA < scoreB)
-#endif
+    else
     {
         //just assigning the pointers
         targetImg = imgA;  //keep these pointers to identify later
@@ -2359,7 +2336,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
         supportToTargetPTScores = ptCompatB2A; ptCompatB2A = NULL;
         targetFilterResponse = filterResponseA;
         targetPyra = pyraA;
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
         targetWeights = &viewA_weights;
 #endif
         supportImg = imgB;  //keep these pointers to identify later
@@ -2369,7 +2346,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
         targetToSupportPTScores = ptCompatA2B; ptCompatA2B = NULL;
         supportFilterResponse = filterResponseB;
         supportPyra = pyraB;
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
         supportWeights = &viewB_weights;
 #endif
     }
@@ -2415,7 +2392,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
         std::vector<int>* newPartTypes_nms = NULL; //a container to be used after nms (or not_nms_pick_best) - allocated in nms
         // run it with supporting information
         std::vector<FPTYPE> *newBoxes = detect_fast_withEpiConstraint_and_PTC(targetImg, model,
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
                                                                               supportWeights,                                                                              
 #endif
                                                                               supportBoxes, supportToTargetEpiLines,
@@ -2546,7 +2523,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
         std::swap(supportToTargetPTScores, targetToSupportPTScores);
         std::swap(targetFilterResponse, supportFilterResponse);
         std::swap(targetPyra, supportPyra);
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
         std::swap(targetWeights, supportWeights);        
 #endif
         
@@ -2578,7 +2555,7 @@ std::pair<const std::vector<FPTYPE>*, const std::vector<FPTYPE>* > detect_fast_m
         txtFile.open(buffer);
         txtFile << iteration-1 << "\n";
         for (std::vector<FPTYPE>::iterator it = epsilons.begin() ; it != epsilons.end(); ++it) txtFile << *it << "\n";
-#if defined(WFV) || defined(AVS)
+#ifdef AVS
         txtFile << "\n------- Weight Info -------\n";
         txtFile << "Est. YR errors on A: " << std::endl;
         for (std::vector<FPTYPE>::iterator it = estimatedYRErrors_A.begin() ; it != estimatedYRErrors_A.end(); ++it){ txtFile << *it << "\n";}
@@ -2752,7 +2729,8 @@ int main(const int argc, const char **argv)
     if (argc != 10) //let's force the user to input all arguments
     {
         printf("Usage: %s image_fileA image_fileB epipolarGeometryFileBtoA epipolarGeomteryFileBtoA maxIterations requiredEpsilon OutputFolderForSaving modelFileName HeatMapMultiplier\n\n", argv[0]);
-        printf("Example: %s ../resources/im0110A.jpg ../resources/im0110B.jpg ../resources/BtoA.csv ../resources/AtoB.csv 12 0.1 ../output ../resources/model.txt 0.07 \n", argv[0]);
+        printf("Example: %s ../resources/HE/S1_Walking_1_(C1)/im0080.bmp ../resources/HE/S1_Walking_1_(C2)/im0080.bmp ../resources/epi_lines/S1_C2wrtC1.csv ../resources/epi_lines/S1_C1wrtC2.csv 12 0.1 here/S1_Walking_1_C1-wrt-C2 ../resources/model_he.txt 0.07\n", argv[0]);
+        
         return 1;
     }
 
@@ -2836,7 +2814,7 @@ int main(const int argc, const char **argv)
     if (argc != 13) //let's force the user to input all arguments
     {
         printf("Usage: %s image_fileA image_fileB epipolarGeometryFileBtoA epipolarGeomteryFileBtoA partTypeScoreFileBtoA partTypeScoreAtoB maxIterations requiredEpsilon OutputFolderForSaving modelFileName HeatMapMultiplier PartTypeMultiplier\n\n", argv[0]);
-        printf("Example: %s ../resources/im0110A.jpg ../resources/im0110B.jpg ../resources/epiBtoA.csv ../resources/epiAtoB.csv ../resources/partTypeScrBtoA.csv ../resources/partTypeScrAtoB.csv 12 0.1 ../output ../resources/model.txt 0.07 0.03\n", argv[0]);
+        printf("Example: %s ../resources/HE/S1_Walking_1_(C1)/im0080.bmp ../resources/HE/S1_Walking_1_(C2)/im0080.bmp ../resources/epi_lines/S1_C2wrtC1.csv ../resources/epi_lines/S1_C1wrtC2.csv ../resources/PTC/he_C2wrtC1.csv ../resources/PTC/he_C1wrtC2.csv 12 0.1 here/S1_Walking_1_C1-wrt-C2 ../resources/model_he.txt 0.07 0.03\n", argv[0]);
         return 1;
     }
     
