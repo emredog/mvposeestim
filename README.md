@@ -1,10 +1,11 @@
 # mvposeestim
 Multi-view pose estimation with flexible mixtures of parts and adaptive viewpoint selection
 
-**Keywords** human pose estimation, flexible mixtures of parts, multi-view geometry,  
+**Keywords** human pose estimation, flexible mixtures of parts, multi-view geometry
 
 ## General Info
 The implementation of the multi-view human pose estimation method described in [1].
+![Overview](https://github.com/emredog/mvposeestim/blob/master/resources/misc/overview.png)
 
 The single-view version of the code is built on [2] and its [Matlab implementation](http://www.ics.uci.edu/~yyang8/research/pose/).
 
@@ -15,10 +16,8 @@ There are different modes of execution:
 * **Multi-view & Part Type Compatibility (MV_PTC)** - Multi-view human pose estimation code, that uses geometric constraints *and* appearance constraints (see [1] for details).
 * **Multi-view & Part Type Compatibility + Adaptive Viewpoint Selection (MV_PTC + AVS)** Multi-view human pose estimation code, that uses geometric constraints, appearance constraints *and* adaptive viewpoint selection scheme (see [1] for details).
 
-Special thanks to [Eric Lombardi](https://liris.cnrs.fr/membres?idn=lombardi), who contributed significantly to this project, particularly on porting the code to C++ and also CUDA implementation of certain functions.
-
-[1] Multi-view pose estimation with flexible mixtures of parts and adaptive viewpoint selection [[arxiv]](https://arxiv.org/abs/1709.08527)
-[2] Articulated pose estimation with flexible mixtures-of-parts [[ieee]](http://ieeexplore.ieee.org/abstract/document/5995741/)
+Multi-view versions has an iterative scheme for inference, which is demonstrated below.
+![Overview](https://github.com/emredog/mvposeestim/blob/master/resources/misc/flow.png)
 
 ## Usage
 Execution mode is controlled via compiler instructions. See examples below to get a sense.
@@ -45,6 +44,10 @@ This example runs the code for the MV_PTC version (with or without AVS), for the
 
 Tested on Ubuntu 16.04.
 
+## Some results
+![Quantitative Results](https://github.com/emredog/mvposeestim/blob/master/resources/misc/quantitative.png)
+
+
 ## Notes
 * Both HumanEva and UMPM datasets provide calibration parameters. In this implementation, we used custom built comma separated files as look-up tables to query epipolar correspondence, which are provided under `resources/epi_lines` folder.
 * Appearance constraints (PTC files) are learned as described in [1]. We provide the co-occurrennce matrices under `resources/PTC` folder.
@@ -54,3 +57,14 @@ Tested on Ubuntu 16.04.
 * Hyper-parameters (e.g. heatmap multiplier (contribution of the epipolar constraints) and PTC multiplier (contribution of the appearance constraints)) are learned on the validation sets. When in doubt, use 0.07 and 0.03 respectively. Or experiment around to find what works for you the best.
 * **Adaptive viewpoint selection (1)** - In this implementation, we ran the error-estimation ConvNet offline, and recorded the outputs for every frame in the dataset. The files are under `resources` and with names `error_prediction_*.csv`. Therefore, we implemented the `EstimateYrErrorCNN` class as a simple fetching code. This class can be re-written, of course, to run the ConvNet directly.
 * **Adaptive viewpoint selection (2)** - The ConvNet is implemented in [Keras](https://keras.io/), and code to preprocess data, train and test etc. can be found under `AdaptiveViewpointSelection` folder. It is basically a finetuned VGG net with some additional tweaks and FC layers at the end.
+![ConvNet](https://github.com/emredog/mvposeestim/blob/master/resources/misc/VGG-Finetuned.jpg)
+
+## Acknowledgements
+Special thanks to [Eric Lombardi](https://liris.cnrs.fr/membres?idn=lombardi), who contributed significantly to this project, particularly on porting the code to C++ and also CUDA implementation of certain functions.
+
+Thanks to Christian Wolf, Atilla Baskurt and Gonen Eren who guided me through various stages of this work.
+
+## References 
+[1] Multi-view pose estimation with flexible mixtures of parts and adaptive viewpoint selection [[arxiv]](https://arxiv.org/abs/1709.08527)
+
+[2] Articulated pose estimation with flexible mixtures-of-parts [[ieee]](http://ieeexplore.ieee.org/abstract/document/5995741/)
