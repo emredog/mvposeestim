@@ -1,5 +1,7 @@
 # mvposeestim
-Multi-view pose estimation with flexible mixtures of parts and adaptive viewpoint selection
+Multi-view pose estimation with flexible mixtures of parts and adaptive viewpoint selection.
+
+_**Please cite [1] if you use this implementation.**_
 
 **Keywords** human pose estimation, flexible mixtures of parts, multi-view geometry
 
