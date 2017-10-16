@@ -62,7 +62,7 @@ Tested on Ubuntu 16.04.
 ## Acknowledgements
 Special thanks to [Eric Lombardi](https://liris.cnrs.fr/membres?idn=lombardi), who contributed significantly to this project, particularly on porting the code to C++ and also CUDA implementation of certain functions.
 
-Thanks to Christian Wolf, Atilla Baskurt and Gonen Eren who guided me through various stages of this work.
+Thanks to [Christian Wolf](http://liris.cnrs.fr/christian.wolf/), [Atilla Baskurt](http://liris.cnrs.fr/atilla.baskurt/wiki/doku.php) and [Gonen Eren](https://www.linkedin.com/in/goneneren/) who guided me through various stages of this work.
 
 ## References 
 [1] Multi-view pose estimation with flexible mixtures of parts and adaptive viewpoint selection [[arxiv]](https://arxiv.org/abs/1709.08527)
