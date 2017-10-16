@@ -17,8 +17,7 @@ MV := no
 MV_PTC := no
 SAVE_TEXT := yes
 SAVE_IMAGES := no
-WFV := no
-WFV_CNN := no
+AVS := no
 HUMANEVA := yes
 UMPM := no
 VERBOSE := no
@@ -37,32 +36,21 @@ ifeq ($(HUMANEVA),yes)
 	endif
 endif
 
-# check if WFV and WFV_CNN is given together (it should not)
-ifeq ($(WFV),yes)
-	ifeq ($(WFV_CNN),yes)
-        $(error WFV and WFV_CNN flags cannot be used in conjunction)
-	endif
-endif
+
 
 # check if it tries to use WFV without multi-view
 ifeq ($(MV),no)
 	ifeq ($(MV_PTC),no)
-		ifeq ($(WFV),yes)
-        	$(error WFV is only allowed with either MV or MV_PTC)
-        endif
-        ifeq ($(WFV_CNN),yes)
-        	$(error WFV_CNN is only allowed with either MV or MV_PTC)
+        ifeq ($(AVS),yes)
+        	$(error AVS is only allowed with either MV or MV_PTC)
         endif     
 	endif
 endif
 
 # check if USE_NMS and WFV is given together (currently it is not supported)
 ifeq ($(USE_NMS),yes)
-	ifeq ($(WFV),yes)
-        $(error USE_NMS and WFV flags cannot be used in conjunction, it is not supported yet.)
-	endif
-	ifeq ($(WFV_CNN),yes)
-        $(error USE_NMS and WFV_CNN flags cannot be used in conjunction, it is not supported yet.)
+	ifeq ($(AVS),yes)
+        $(error USE_NMS and AVS flags cannot be used in conjunction, it is not supported yet.)
 	endif
 endif
 
@@ -114,16 +102,10 @@ ifeq ($(SAVE_TEXT),yes)
 	NVCCFLAGS += -DSAVE_TEXT
 endif
 
-ifeq ($(WFV),yes)
+ifeq ($(AVS),yes)
 	# uses Weights for Viewpoints
-	CFLAGS += -DWFV
-	NVCCFLAGS += -DWFV
-endif
-
-ifeq ($(WFV_CNN),yes)
-	# uses Weights for Viewpoints
-	CFLAGS += -DWFV_CNN
-	NVCCFLAGS += -DWFV_CNN
+	CFLAGS += -DAVS
+	NVCCFLAGS += -DAVS
 endif
 
 ifeq ($(UMPM),yes)
@@ -171,11 +153,9 @@ help:
 	@echo "make test  -> to debug Makefile"
 	@echo "make FPTYPE=float  -> use floats instead of doubles"
 	@echo "make MV=yes  -> perform mV pose estimation"
-	@echo "make MV=yes WFV=yes -> perform mV pose estimation with Weights for Viewpoints"
-	@echo "make MV=yes WFV_CNN=yes -> perform mV pose estimation with Weights for Viewpoints on ConvNets"
-	@echo "make MV_PTC=yes  -> perform mV pose estimation with Part Type Compatibility"
-	@echo "make MV_PTC=yes WFV=yes -> perform mV pose estimation with Part Type Compatibility and Weights for Viewpoints"
-	@echo "make MV_PTC=yes WFV_CNN=yes -> perform mV pose estimation with Part Type Compatibility and Weights for Viewpoints on ConvNets"
+	@echo "make MV=yes AVS=yes -> perform mV pose estimation with Adaptive Viewpoint Selection"
+	@echo "make MV_PTC=yes  -> perform MultiView pose estimation with Part Type Compatibility"	
+	@echo "make MV_PTC=yes AVS=yes -> perform MultiView pose estimation with Part Type Compatibility and Adaptive Viewpoint Selection"
 	@echo "make MV=yes SAVE_TEXT=no  -> do not save results as text files"
 	@echo "make MV=yes SAVE_IMAGES=yes  -> save results as text files AND images"
 	@echo "make HUMANEVA=no UMPM=yes  -> code configured for UMPM dataset, instead of HUMANEVA"
@@ -187,9 +167,8 @@ test:
 	@echo INC=$(INC) 
 	@echo LDFLAGS=$(LDFLAGS) 
 	@echo MV=$(MV)
-	@echo MV_PTC=$(MV_PTC)
-	@echo WFV=$(WFV)
-	@echo WFV_CNN=$(WFV_CNN)
+	@echo MV_PTC=$(MV_PTC)	
+	@echo AVS=$(AVS)
 	@echo USE_NMS=$(USE_NMS)
 	@echo USE_CUDA=$(USE_CUDA)
 	@echo SAVE_TEXT=$(SAVE_TEXT)
