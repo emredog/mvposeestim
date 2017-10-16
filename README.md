@@ -39,7 +39,7 @@ make HUMANEVA=no UMPM=yes     -> code configured for UMPM dataset, instead of HU
 So, go to `build` directory, compile the code to fit your needs. Run it as follows:
 
 ```
-./detect_fast_C ../resources/HE/S1_Walking_1_\(C1\)/im0080.bmp ../resources/HE/S1_Walking_1_\(C2\)/im0080.bmp ../resources/epi_lines/S1_C2wrtC1.csv ../resources/epi_lines/S1_C1wrtC2.csv ../resources/PTC/he_C2wrtC1.csv ../resources/PTC/he_C1wrtC2.csv 12 0.1 here/S1_Walking_1_C1-wrt-C2 ../resources/model_he.txt 0.07 0.03
+./detect_fast_C ../resources/HE/S1_Walking_1_\(C1\)/im0080.bmp ../resources/HE/S1_Walking_1_\(C2\)/im0080.bmp ../resources/epi_lines/S1_C2wrtC1.csv ../resources/epi_lines/S1_C1wrtC2.csv ../resources/PTC/he_C2wrtC1.csv ../resources/PTC/he_C1wrtC2.csv 12 0.1 somefolder/S1_Walking_1_C1-wrt-C2 ../resources/model_he.txt 0.07 0.03
 ```
 This example runs the code for the MV_PTC version (with or without AVS), for the 1st subject of the [HumanEva-I](http://humaneva.is.tue.mpg.de/) dataset, where the action is walking and the frame number is 80. Epipolar and PTC files are provided under the `resources` folder. See *Notes* for implementation details.
 
@@ -52,4 +52,5 @@ Tested on Ubuntu 16.04.
 ** **model_he.txt** - Model trained on HumanEva - S1, all actions. Note that following the literature, we divided the original training set into training+validation and used the original validation set as our test set.
 ** **model_umpm.txt** Model trained on UMPM - p1, all actions.
 * Hyper-parameters (e.g. heatmap multiplier (contribution of the epipolar constraints) and PTC multiplier (contribution of the appearance constraints)) are learned on the validation sets. When in doubt, use 0.07 and 0.03 respectively. Or experiment around to find what works for you the best.
-* **Adaptive viewpoint selection** - In this implementation, we ran the error-estimation ConvNet 
+* **Adaptive viewpoint selection (1)** - In this implementation, we ran the error-estimation ConvNet offline, and recorded the outputs for every frame in the dataset. The files are under `resources` and with names `error_prediction_*.csv`. Therefore, we implemented the `EstimateYrErrorCNN` class as a simple fetching code. This class can be re-written, of course, to run the ConvNet directly.
+* **Adaptive viewpoint selection (2)** - The ConvNet is implemented in [Keras](https://keras.io/), and code to preprocess data, train and test etc. can be found under `AdaptiveViewpointSelection` folder. It is basically a finetuned VGG net with some additional tweaks and FC layers at the end.
