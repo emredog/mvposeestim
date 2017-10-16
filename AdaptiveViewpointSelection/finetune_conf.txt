@@ -1,0 +1,28 @@
+FINETUNING VGG -- HumanEva: 
+01:  Finetune on the VGG-ConvBlock5 | TopModel: FC 512(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001 						==> BEST VAL-Loss: 33.88 (250 epochs)
+02:  Finetune on the VGG-ConvBlock5 | TopModel: FC1024(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001						==> BEST VAL-Loss: 31.73 (250 epochs)
+03:  Finetune on the VGG-ConvBlock4 and 5 | TopModel: FC1024(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001				==> BEST VAL-Loss: 35.55 (250 epochs)
+04:  Finetune on the VGG-ConvBlock5 | TopModel: FC512-FC512(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001					==> BEST VAL-Loss: 46.69 (250 epochs)
+05:  Finetune on the VGG-ConvBlock4 and 5 | TopModel: FC512-FC512(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001			==> BEST VAL-Loss: 39.06 (250 epochs)
+
+
+
+
+
+
+FINETUNING VGG -- UMPM09:
+01:  Finetune on the VGG-ConvBlock5 | TopModel: FC 512(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001 						==> BEST VAL-Loss: 16.54 (250 epochs)
+02:  Finetune on the VGG-ConvBlock5 | TopModel: FC1024(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001						==> BEST VAL-Loss: 15.99 (250 epochs)
+03:  Finetune on the VGG-ConvBlock4 and 5 | TopModel: FC1024(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001				==> BEST VAL-Loss: 13.04 (250 epochs)
+04:  Finetune on the VGG-ConvBlock5 | TopModel: FC512-FC512(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001					==> BEST VAL-Loss: 16.78 (400 epochs)
+05:  Finetune on the VGG-ConvBlock4 and 5 | TopModel: FC512-FC512(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001			==> BEST VAL-Loss: 13.73 (400 epochs)
+
+
+FINETUNING VGG -- UMPM10:
+06: Finetune on the VGG-ConvBlock5 | TopModel: FC1024(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001						==> BEST VAL-Loss: 95.96 (250 epochs)
+07: Finetune on the VGG-ConvBlock4 and 5 | TopModel: FC1024(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001					==> BEST VAL-Loss: 87.40 (250 epochs) (test:188.57)
+08: Finetune on the VGG-ConvBlock5 | TopModel: FC 512(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001						==> BEST VAL-Loss: 96.48 (250 epochs)
+09: Finetune on the VGG-ConvBlock5 | TopModel: FC1024(reg.35)-BN-PReLU-Dropout(.5), LR:0.0001						==> BEST VAL-Loss: 95.47 (250 epochs)
+10: Finetune on the VGG-ConvBlock5 | TopModel: FC1024(reg.15)-BN-PReLU-Dropout(.5), LR:0.0001						==> BEST VAL-Loss: 97.84 (250 epochs)
+11: Finetune on the VGG-ConvBlock5 | TopModel: FC 256(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001						==> BEST VAL-Loss: 95.65 (250 epochs)
+12: Finetune on the VGG-ConvBlock4 and 5 | TopModel: FC 256(reg.25)-BN-PReLU-Dropout(.5), LR:0.0001					==> BEST VAL-Loss:  (250 epochs)
